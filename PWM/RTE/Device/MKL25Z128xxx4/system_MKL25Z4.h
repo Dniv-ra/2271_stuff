@@ -111,7 +111,7 @@ extern "C" {
 #endif
 
 
-
+#define CLOCK_SETUP 1
 
 /* MCG mode constants */
 
