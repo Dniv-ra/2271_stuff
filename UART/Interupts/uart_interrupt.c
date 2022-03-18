@@ -7,12 +7,12 @@
 volatile uint8_t data_to_send;
 volatile uint8_t received_data;
 //Unsure should double check
-volatile int new_data = 0;
+//volatile int new_data = 0;
 
 void UART2_IRQHandler(void) 
 {
 	//If empty means triggered by UDRE else is RXC
-	if(UART2->D) 
+	if(UART2->S1 & UART_S1_TDRE_MASK) 
 	{
 		UART2_D = data_to_send;
 		UART2->C2 &= ~UART_C2_TIE_MASK;
@@ -21,7 +21,7 @@ void UART2_IRQHandler(void)
 	{
 		 received_data = UART2_D;
 		 //Has received new data 
-		 new_data = 1;
+		 //new_data = 1;
 	}
 }
 
@@ -90,7 +90,7 @@ int main()
 		if(new_data == 1)
 		{
 			rx_data = receive();
-			new_data = 0;
+			//new_data = 0;
 		}
 		transmit(0x69);
 	}
