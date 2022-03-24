@@ -6,6 +6,8 @@
 #include  CMSIS_device_header
 #include "cmsis_os2.h"
 
+#include "MKL25Z4.h"
+
 #define MASK(x) (1 << x)
 #define UART2_TX_PIN 3
 #define UART2_RX_PIN 2
