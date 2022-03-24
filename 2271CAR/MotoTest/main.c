@@ -7,8 +7,8 @@
 #include "cmsis_os2.h"
 
 #define MASK(x) (1 << x)
-#define UART2_TX_PIN 22
-#define UART2_RX_PIN 23
+#define UART2_TX_PIN 3
+#define UART2_RX_PIN 2
 #define BAUD_RATE 9600
  
 void InitGPIO(void)
@@ -16,11 +16,11 @@ void InitGPIO(void)
 	// Enable Clock to PORTA
 	SIM->SCGC5 |= (SIM_SCGC5_PORTA_MASK);
 	// Configure MUX settings to make all 3 pins GPIO
-	PORTB->PCR[1] &= ~PORT_PCR_MUX_MASK;
-	PORTB->PCR[1] |= PORT_PCR_MUX(1);
+	PORTA->PCR[1] &= ~PORT_PCR_MUX_MASK;
+	PORTA->PCR[1] |= PORT_PCR_MUX(1);
 	
-	PORTB->PCR[2] &= ~PORT_PCR_MUX_MASK;
-	PORTB->PCR[2] |= PORT_PCR_MUX(1);
+	PORTA->PCR[2] &= ~PORT_PCR_MUX_MASK;
+	PORTA->PCR[2] |= PORT_PCR_MUX(1);
 		
 	// Set Data Direction Registers for PortB and PortD
 	PTA->PDDR |= (MASK(1) | MASK(2));
@@ -52,13 +52,13 @@ void initUART(uint32_t baud)
 	uint32_t divisor, bus_clock;
 	
 	SIM->SCGC4 |= SIM_SCGC4_UART2_MASK;
-	SIM->SCGC5 |= SIM_SCGC5_PORTE_MASK;
+	SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
 	
-	PORTE->PCR[UART2_TX_PIN] &= ~PORT_PCR_MUX_MASK;
-	PORTE->PCR[UART2_TX_PIN] |= ~PORT_PCR_MUX(4);
+	PORTD->PCR[UART2_TX_PIN] &= ~PORT_PCR_MUX_MASK;
+	PORTD->PCR[UART2_TX_PIN] |= PORT_PCR_MUX(3);
 	
-	PORTE->PCR[UART2_RX_PIN] &= ~PORT_PCR_MUX_MASK;
-	PORTE->PCR[UART2_RX_PIN] |= ~PORT_PCR_MUX(4);
+	PORTD->PCR[UART2_RX_PIN] &= ~PORT_PCR_MUX_MASK;
+	PORTD->PCR[UART2_RX_PIN] |= PORT_PCR_MUX(3);
 	
 	UART2->C2 &= ~((UART_C2_TE_MASK) | (UART_C2_RE_MASK));
 	
@@ -82,6 +82,25 @@ void initUART(uint32_t baud)
  * Application main thread
  *---------------------------------------------------------------------------*/
 
+void app_main (void *argument) {
+	
+  for (;;) {
+		switch(received_data) {
+			case 0x31:
+				PTA->PSOR |= MASK(1);
+				PTA->PCOR |= MASK(2);
+				break;
+			case 0x32:
+				PTA->PSOR |= MASK(2);
+				PTA->PCOR |= MASK(1);
+				break;
+			case 0x35:
+				PTA->PCOR |= MASK(1);
+				PTA->PCOR |= MASK(2);
+				break;
+		}
+	}
+}
  
 int main (void) {
  
@@ -90,20 +109,8 @@ int main (void) {
   // ...
 	InitGPIO();
 	initUART(BAUD_RATE);
-  for (;;) {
-		switch(received_data) {
-			case 0x33:
-				PTA->PSOR |= MASK(1);
-				PTA->PCOR |= MASK(2);
-				break;
-			case 0x44:
-				PTA->PSOR |= MASK(2);
-				PTA->PCOR |= MASK(1);
-				break;
-			case 0x55:
-				PTA->PSOR |= MASK(2);
-				PTA->PCOR |= MASK(1);
-				break;
-		}
-	}
+	osKernelInitialize();                 // Initialize CMSIS-RTOS
+  osThreadNew(app_main, NULL, NULL);   
+  osKernelStart();       
+  for (;;) {}
 }
