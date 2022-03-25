@@ -5,8 +5,8 @@
 #define TXD2 17
 
 // Replace with your network credentials
-const char* ssid = "SriLinkSysA";
-const char* password = "ungu@1234";
+const char* ssid = "Hidden Network2";
+const char* password = "whatisthepassword";
 
 // Set web server port number to 80
 WiFiServer server(80);
@@ -29,9 +29,9 @@ const long timeoutTime = 2000;
 int wait30 = 30000; // time to reconnect when connection is lost.
 
 // This is your Static IP
-IPAddress local_IP(192, 168, 10, 136); 
+IPAddress local_IP(192, 168, 221, 136); 
 // Gateway IP address
-IPAddress gateway(192, 168, 10, 1);
+IPAddress gateway(192, 168, 221, 1);
 IPAddress subnet(255, 255, 0, 0);
 IPAddress primaryDNS(8, 8, 8, 8);
 IPAddress secondaryDNS(8, 8, 4, 4); 
@@ -102,36 +102,36 @@ void loop() {
   
   if(req.indexOf("status") != -1)
   {
-    response = "<h1> WiFi Connected: " + ip_address + "</h1>";
+    response = "WiFi Connected: " + ip_address";
   }
   if(req.indexOf("forward") != -1)
   {
 //    digitalWrite(output26, HIGH);
-    response = "RED LED ON";
+    response = "Move Forward";
     Serial2.write(0x31);
   }
   if(req.indexOf("backward") != -1)
   {
 //    digitalWrite(output26, LOW);
-    response = "RED LED OFF";
+    response = "Move Backward";
     Serial2.write(0x32);
   }  
   if(req.indexOf("left") != -1)
   {
 //    digitalWrite(output26, HIGH);
-    response = "GREEN LED ON";
+    response = "Turn Left";
     Serial2.write(0x33);
   }
   if(req.indexOf("right") != -1)
   {
 //    digitalWrite(output26, LOW);
-    response = "GREEN LED OFF";
+    response = "Turn Right";
     Serial2.write(0x34);
   }
   if(req.indexOf("stop") != -1)
   {
 //    digitalWrite(output26, LOW);
-    response = "GREEN LED OFF";
+    response = "Force Stop";
     Serial2.write(0x35);
   }
   /*
