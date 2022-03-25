@@ -5,8 +5,8 @@
 #define TXD2 17
 
 // Replace with your network credentials
-const char* ssid = "Hidden Network2";
-const char* password = "whatisthepassword";
+const char* ssid = "Rakesh iPhone";
+const char* password = "0123456789";
 
 // Set web server port number to 80
 WiFiServer server(80);
@@ -29,10 +29,10 @@ const long timeoutTime = 2000;
 int wait30 = 30000; // time to reconnect when connection is lost.
 
 // This is your Static IP
-IPAddress local_IP(192, 168, 221, 136); 
+IPAddress local_IP(172, 20, 10, 5); 
 // Gateway IP address
-IPAddress gateway(192, 168, 221, 1);
-IPAddress subnet(255, 255, 0, 0);
+IPAddress gateway(172, 20, 10, 1);
+IPAddress subnet(255, 255, 255, 240);
 IPAddress primaryDNS(8, 8, 8, 8);
 IPAddress secondaryDNS(8, 8, 4, 4); 
 
@@ -102,7 +102,7 @@ void loop() {
   
   if(req.indexOf("status") != -1)
   {
-    response = "WiFi Connected: " + ip_address";
+    response = "WiFi Connected: " + ip_address;
   }
   if(req.indexOf("forward") != -1)
   {
