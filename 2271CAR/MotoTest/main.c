@@ -11,14 +11,14 @@
 #define MASK(x) (1 << x)
 #define UART2_TX_PIN 3
 #define UART2_RX_PIN 2				
-#define MOTOR_BACK_LEFT_FWD  2 //
-#define MOTOR_BACK_LEFT_BK  1 //
-#define MOTOR_BACK_RIGHT_FWD 5 //
-#define MOTOR_BACK_RIGHT_BK  4//
-#define MOTOR_FRONT_LEFT_FWD 29//
-#define MOTOR_FRONT_LEFT_BK  30//
-#define MOTOR_FRONT_RIGHT_FWD  4//
-#define MOTOR_FRONT_RIGHT_BK   5//
+#define MOTOR_BACK_LEFT_FWD  2 
+#define MOTOR_BACK_LEFT_BK  1 
+#define MOTOR_BACK_RIGHT_FWD 5 
+#define MOTOR_BACK_RIGHT_BK  4
+#define MOTOR_FRONT_LEFT_FWD 29
+#define MOTOR_FRONT_LEFT_BK  30
+#define MOTOR_FRONT_RIGHT_FWD  4
+#define MOTOR_FRONT_RIGHT_BK   5
 #define BAUD_RATE 9600
  
 void InitGPIO(void)
@@ -126,6 +126,7 @@ void initPIT(void) {
 }
 
 volatile int ultraFlag = 0;
+osSemaphoreId_t ultraSem;
 
 void PORTA_IRQHandler(void) //change A to whatever port the echo pin is supposed to be, enable interrupts
 {
@@ -140,17 +141,18 @@ void PORTA_IRQHandler(void) //change A to whatever port the echo pin is supposed
 	} else {
 		//2nd call will be for falling 
 		//Stop PIT timer
-		PIT_TCTRL1 &= ~PIT_TCTRL_TEN_MASK; // start Timer 1
+		PIT_TCTRL1 &= ~PIT_TCTRL_TEN_MASK; // stop Timer 1
 		//Set flag to 0
 		ultraFlag = 0;
 		//release the semaphore
-		//osSemaphoreRelease(ultraSem);
+		osSemaphoreRelease(ultraSem);
 	}
 }
 
 /*----------------------------------------------------------------------------
  * Threads
  *---------------------------------------------------------------------------*/
+
 
 int distance = 0;
 void ultrasonic (void *argument) {
@@ -163,9 +165,9 @@ void ultrasonic (void *argument) {
 		//Rising edge start counter (prolly use pit module with a counter)
 		//Falling edge end counter
 		//Pause execution till the count is done (semaphore here)
-		//osSemaphoreAcquire(ultraSem,osWaitForever);
+		osSemaphoreAcquire(ultraSem,osWaitForever);
 		//distances: 5cm <-> 300 cm : 0.000147s <-> 0.00882s 
-		//distance = counter * 0.034 / 2;
+		distance = counter * 0.034 / 2;
 	}
 }
 
@@ -235,8 +237,13 @@ void app_main (void *argument) {
 int main (void) {
  
   // System Initialization
-		SystemCoreClockUpdate();
+	SystemCoreClockUpdate();
   // ...
+	
+	//Control mechanisms
+	//Semaphores
+	ultraSem = osSemaphoreNew(1, 0, NULL);
+	
 	InitGPIO();
 	initUART(BAUD_RATE);
 	osKernelInitialize();                 // Initialize CMSIS-RTOS
