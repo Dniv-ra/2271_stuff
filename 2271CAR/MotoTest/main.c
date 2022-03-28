@@ -112,23 +112,37 @@ void initUART(uint32_t baud)
 
 volatile int counter = 0;
 //PIT IRQ here
+void PIT_IRQHandler() {
+	counter++;
+}
+
+
+void initPIT(void) {
+	PIT_LDVAL1 = 47; // setup timer 1 for 47 cycles (cycles/sec * time = value) (clkspd is 48000000 ->  48 cycles is 10^-6 s, 1 microsecond)
+  PIT_TCTRL1 |= PIT_TCTRL_TIE_MASK; // enable Timer 1 interrupts 
+	NVIC_ClearPendingIRQ(PIT_IRQn);
+	NVIC_SetPriority(PIT_IRQn, 2);
+	NVIC_EnableIRQ(PIT_IRQn);
+}
 
 volatile int ultraFlag = 0;
 
-void PORTA_IRQHandler(void) //change A to whatever port the echo pin is supposed to be
+void PORTA_IRQHandler(void) //change A to whatever port the echo pin is supposed to be, enable interrupts
 {
 	
 	if(!ultraFlag){
 		//First call will be for rising (hopefully)
 		//Start PIT timer and reset counter to 0
+		PIT_TCTRL1 |= PIT_TCTRL_TEN_MASK; // start Timer 1
 		//Set flag to 1
 		ultraFlag = 1;
 		counter = 0;
 	} else {
 		//2nd call will be for falling 
 		//Stop PIT timer
+		PIT_TCTRL1 &= ~PIT_TCTRL_TEN_MASK; // start Timer 1
 		//Set flag to 0
-		ultraFlag = 1;
+		ultraFlag = 0;
 		//release the semaphore
 		//osSemaphoreRelease(ultraSem);
 	}
@@ -138,6 +152,7 @@ void PORTA_IRQHandler(void) //change A to whatever port the echo pin is supposed
  * Threads
  *---------------------------------------------------------------------------*/
 
+int distance = 0;
 void ultrasonic (void *argument) {
 	for(;;) {
 		//Send from trigger
@@ -150,7 +165,7 @@ void ultrasonic (void *argument) {
 		//Pause execution till the count is done (semaphore here)
 		//osSemaphoreAcquire(ultraSem,osWaitForever);
 		//distances: 5cm <-> 300 cm : 0.000147s <-> 0.00882s 
-		//distance = time * 0.034 / 2;
+		//distance = counter * 0.034 / 2;
 	}
 }
 
