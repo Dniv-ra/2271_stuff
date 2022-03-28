@@ -108,10 +108,51 @@ void initUART(uint32_t baud)
 	NVIC_SetPriority(UART2_IRQn, 2);
 	NVIC_EnableIRQ(UART2_IRQn);
 }
- 
+
+
+volatile int counter = 0;
+//PIT IRQ here
+
+volatile int ultraFlag = 0;
+
+void PORTA_IRQHandler(void) //change A to whatever port the echo pin is supposed to be
+{
+	
+	if(!ultraFlag){
+		//First call will be for rising (hopefully)
+		//Start PIT timer and reset counter to 0
+		//Set flag to 1
+		ultraFlag = 1;
+		counter = 0;
+	} else {
+		//2nd call will be for falling 
+		//Stop PIT timer
+		//Set flag to 0
+		ultraFlag = 1;
+		//release the semaphore
+		//osSemaphoreRelease(ultraSem);
+	}
+}
+
 /*----------------------------------------------------------------------------
- * Application main thread
+ * Threads
  *---------------------------------------------------------------------------*/
+
+void ultrasonic (void *argument) {
+	for(;;) {
+		//Send from trigger
+		//PTX->PSOR |= MASK(TRIGGER);
+		//delay(10); //delay for 10 microseconds
+		//PTX->PCOR |= MASK(TRIGGER);
+		//Read from echo
+		//Rising edge start counter (prolly use pit module with a counter)
+		//Falling edge end counter
+		//Pause execution till the count is done (semaphore here)
+		//osSemaphoreAcquire(ultraSem,osWaitForever);
+		//distances: 5cm <-> 300 cm : 0.000147s <-> 0.00882s 
+		//distance = time * 0.034 / 2;
+	}
+}
 
 void app_main (void *argument) {
 	
