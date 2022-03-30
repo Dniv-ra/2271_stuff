@@ -119,13 +119,13 @@ void loop() {
   if(req.indexOf("left") != -1)
   {
 //    digitalWrite(output26, HIGH);
-    response = "Turn Left";
+    response = "Curved Turn Left";
     Serial2.write(0x33);
   }
   if(req.indexOf("right") != -1)
   {
 //    digitalWrite(output26, LOW);
-    response = "Turn Right";
+    response = "Curved Turn Right";
     Serial2.write(0x34);
   }
   if(req.indexOf("stop") != -1)
@@ -133,6 +133,30 @@ void loop() {
 //    digitalWrite(output26, LOW);
     response = "Force Stop";
     Serial2.write(0x35);
+  }
+  if(req.indexOf("leftback") != -1)
+  {
+//    digitalWrite(output26, LOW);
+    response = "Curved Back Left Turn";
+    Serial2.write(0x36);
+  }
+  if(req.indexOf("rightback") != -1)
+  {
+//    digitalWrite(output26, LOW);
+    response = "Curved Back Right Turn";
+    Serial2.write(0x37);
+  }
+  if(req.indexOf("leftsharp") != -1)
+  {
+//    digitalWrite(output26, LOW);
+    response = "Sharp Turn Left";
+    Serial2.write(0x38);
+  }
+  if(req.indexOf("rightsharp") != -1)
+  {
+//    digitalWrite(output26, LOW);
+    response = "Sharp Turn Right";
+    Serial2.write(0x39);
   }
   /*
        if (req.indexOf("on12") != -1) {digitalWrite(LED12, HIGH); estado = "LED12 ON";}
