@@ -111,7 +111,7 @@ void initPIT(void) {
 	SIM->SCGC6 |= SIM_SCGC6_PIT_MASK;
 	
 	PIT_MCR = 0x00;
-	PIT_LDVAL1 = 0x2F; // setup timer 1 for 47 cycles (cycles/sec * time = value) (clkspd is 48000000 ->  48 cycles is 10^-6 s, 1 microsecond)
+	PIT_LDVAL1 = 0x0000002F; // setup timer 1 for 47 cycles (cycles/sec * time = value) (clkspd is 48000000 ->  48 cycles is 10^-6 s, 1 microsecond)
   PIT_TCTRL1 |= PIT_TCTRL_TIE_MASK; // enable Timer 1 interrupts 
 	PIT_TCTRL1 &= ~PIT_TCTRL_TEN_MASK;
 	NVIC_ClearPendingIRQ(PIT_IRQn);
@@ -201,13 +201,15 @@ volatile int consecutive = 0;
 volatile int value = 0;
 
 void TPM0_IRQHandler(void) {
-	if(consecutive != 1) {
+	if(consecutive == 0) {
 		value = TPM0_C4V;
 		consecutive = 1;
 	}
 	else {
 		int temp = TPM0_C4V;
 		counter = temp - value;
+		if(counter < 0)
+			counter = counter + TPM0_MOD;
 		consecutive = 0;
 		osSemaphoreRelease(ultraSem);
 	}
@@ -219,10 +221,13 @@ void initUltrasound(void) {
 	SIM->SCGC5 |= SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTE_MASK;
 	
 	PORTE->PCR[ECHO] &= ~PORT_PCR_MUX_MASK;
-	PORTE->PCR[ECHO] |= PORT_PCR_MUX(3); 
+	PORTE->PCR[ECHO] |= PORT_PCR_MUX(3) | PORT_PCR_PE_MASK; 
+	PORTE->PCR[ECHO] &= ~PORT_PCR_PS_MASK;
+	
 	PORTA->PCR[TRIGGER] &= ~PORT_PCR_MUX_MASK;
 	PORTA->PCR[TRIGGER] |= PORT_PCR_MUX(1);
 	PTA->PDDR |= MASK(TRIGGER); //Trigger is output
+	
 	
 	SIM->SCGC6 |= SIM_SCGC6_TPM0_MASK;
 	//CLOCK SETUP
@@ -231,27 +236,31 @@ void initUltrasound(void) {
 	SIM->SOPT2 |= SIM_SOPT2_TPMSRC(1); 
 	
 	TPM0->SC &= ~((TPM_SC_CMOD_MASK) | (TPM_SC_PS_MASK));
-	TPM0->SC |= (TPM_SC_CMOD(1) | TPM_SC_PS(1)); // Prescaler = 2^7 = 128
+	TPM0->SC |= (TPM_SC_CMOD(1) | TPM_SC_PS(7)); // Prescaler = 2^7 = 128
 	TPM0->SC &= ~TPM_SC_CPWMS_MASK;
 	
 	TPM0_C4SC &= ~(TPM_CnSC_ELSB_MASK | TPM_CnSC_ELSA_MASK | TPM_CnSC_MSA_MASK | TPM_CnSC_MSB_MASK);
 	TPM0_C4SC |= (TPM_CnSC_ELSB(1) | TPM_CnSC_ELSA(1));
 	TPM0_C4SC |= TPM_CnSC_CHIE_MASK; //Enable interrupts
 
+	TPM0_MOD = 0xFFFFFFFF;
 	
 	NVIC_ClearPendingIRQ(TPM0_IRQn);
 	NVIC_SetPriority(TPM0_IRQn, 2);
 	NVIC_EnableIRQ(TPM0_IRQn);
 	TPM0_STATUS = 0xFFFFFFFF;
 	
-	//PTA->PDDR &= ~MASK(ECHO); //Echo is input
+	
+	
 	/*
 	//Interrupts for echo pin
 	PORTA->PCR[ECHO] |= (PORT_PCR_MUX(1) | PORT_PCR_PE_MASK | PORT_PCR_IRQC(0b1011));
 	PORTA->PCR[ECHO] &= ~PORT_PCR_PS_MASK;
+	PTA->PDDR &= ~MASK(ECHO); //Echo is input
 	NVIC_ClearPendingIRQ(PORTA_IRQn);
 	NVIC_SetPriority(PORTA_IRQn, 2);
 	NVIC_EnableIRQ(PORTA_IRQn);
+	PORTA_ISFR = 0xFFFFFFFF; //Clear flag 
 	*/
 }
 
@@ -273,8 +282,6 @@ void ultrasonic (void *argument) {
 		osSemaphoreAcquire(ultraSem,osWaitForever);
 		//distances: 5cm <-> 300 cm : 0.000147s <-> 0.00882s 
 		distance = counter * 0.034 / 2;
-		count++;
-		osDelay(1000);
 	}
 }
 
@@ -365,7 +372,7 @@ int main (void) {
 	initPIT();
 	initUltrasound();
 	initUART(BAUD_RATE);
-	initPWM();
+	//initPWM();
 	osKernelInitialize();                 // Initialize CMSIS-RTOS
 	ultraSem = osSemaphoreNew(1, 0, NULL);
   osThreadNew(ultrasonic, NULL, NULL);   
