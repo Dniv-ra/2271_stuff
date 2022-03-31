@@ -29,6 +29,8 @@
 #define ECHO 31 //PTE31
 #define TRIGGER 2
 
+#define GREEN_LED 12
+#define RED_LED 13
 
 volatile uint8_t data_to_send;
 volatile uint8_t received_data;
@@ -96,6 +98,40 @@ void InitGPIOMotor(void)
 	
 	PORTC->PCR[PWM_TP0CH1] &= ~PORT_PCR_MUX_MASK;
 	PORTC->PCR[PWM_TP0CH1] |= PORT_PCR_MUX(4); //Change to the TPM setting
+}
+
+void InitGPIOLED(void)
+{
+	SIM->SCGC5 |= (SIM_SCGC5_PORTA_MASK);
+	//GREEN LED
+	PORTA->PCR[1] &= ~PORT_PCR_MUX_MASK;
+	PORTA->PCR[1] |= PORT_PCR_MUX(1);
+	
+	PORTA->PCR[2] &= ~PORT_PCR_MUX_MASK;
+	PORTA->PCR[2] |= PORT_PCR_MUX(1);
+	
+	PORTA->PCR[4] &= ~PORT_PCR_MUX_MASK;
+	PORTA->PCR[4] |= PORT_PCR_MUX(1);
+	
+	PORTA->PCR[5] &= ~PORT_PCR_MUX_MASK;
+	PORTA->PCR[5] |= PORT_PCR_MUX(1);
+	
+	PORTA->PCR[12] &= ~PORT_PCR_MUX_MASK;
+	PORTA->PCR[12] |= PORT_PCR_MUX(1);
+	
+	PORTA->PCR[13] &= ~PORT_PCR_MUX_MASK;
+	PORTA->PCR[13] |= PORT_PCR_MUX(1);
+	
+	PORTA->PCR[16] &= ~PORT_PCR_MUX_MASK;
+	PORTA->PCR[16] |= PORT_PCR_MUX(1);
+	
+	PORTA->PCR[17] &= ~PORT_PCR_MUX_MASK;
+	PORTA->PCR[17] |= PORT_PCR_MUX(1);
+	
+	//PORTA->PCR[RED_LED] &= ~PORT_PCR_MUX_MASK;
+	//PORTA->PCR[RED_LED] |= PORT_PCR_MUX(1);
+	PTA->PDDR |= (MASK(1) | MASK(2) | MASK(4) | MASK(5) | MASK(12) | MASK(13) | MASK(16) | MASK(17));
+	
 
 }
 
@@ -264,6 +300,8 @@ void initUltrasound(void) {
 	*/
 }
 
+
+
 /*----------------------------------------------------------------------------
  * Threads
  *---------------------------------------------------------------------------*/
@@ -287,6 +325,37 @@ void ultrasonic (void *argument) {
 
 float trimming = 0.8;
 
+void LED_Movement (void) {
+		int LED_Array[8] = {1, 2, 4, 5, 12, 13, 17, 16};
+		int i = 0;
+				
+		while (received_data != 0x35 && received_data != 0x00) {
+			if (i == 8) {
+				i = 0;
+			}
+			PTA->PCOR |= MASK(1);
+			PTA->PCOR |= MASK(2);
+			PTA->PCOR |= MASK(4);
+			PTA->PCOR |= MASK(5);
+			PTA->PCOR |= MASK(12);
+			PTA->PCOR |= MASK(13);
+			PTA->PCOR |= MASK(16);
+			PTA->PCOR |= MASK(17);
+			PTA->PSOR |= MASK(LED_Array[i]);
+			osDelay(500);
+			i++;	
+		}
+
+				PTA->PSOR |= MASK(1);
+				PTA->PSOR |= MASK(2);
+				PTA->PSOR |= MASK(4);
+				PTA->PSOR |= MASK(5);
+				PTA->PSOR |= MASK(12);
+				PTA->PSOR |= MASK(13);
+				PTA->PSOR |= MASK(16);
+				PTA->PSOR |= MASK(17);
+
+}
 
 void app_main (void *argument) {
 	
@@ -298,6 +367,8 @@ void app_main (void *argument) {
 				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK //TPM1_CH1
 				TPM0_C0V = calc_cnv(TPM0_MOD, 1) * trimming; //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD //TPM0_CH0
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK //TP0_CH1
+			
+				LED_Movement();
 				break;
 			
 			case 0x32: //back
@@ -305,6 +376,8 @@ void app_main (void *argument) {
 				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+			
+				LED_Movement();
 				break;
 			
 			case 0x33: //left forward curved
@@ -312,6 +385,8 @@ void app_main (void *argument) {
 				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+			
+				LED_Movement();
 				break;
 			
 			case 0x34: //right forward curved
@@ -319,6 +394,8 @@ void app_main (void *argument) {
 				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 0.25); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+			
+				LED_Movement();
 				break;
 			
 			case 0x36: //left backward curved
@@ -326,6 +403,8 @@ void app_main (void *argument) {
 				TPM1_C1V = calc_cnv(TPM1_MOD, 0.25); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+			
+				LED_Movement();
 				break;
 			
 			case 0x37: //right backward curved
@@ -333,6 +412,8 @@ void app_main (void *argument) {
 				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0.25); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				
+				LED_Movement();
 				break;
 			
 			case 0x38: //left strict
@@ -340,6 +421,8 @@ void app_main (void *argument) {
 				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				
+				LED_Movement();
 				break;
 			
 			case 0x39: //right strict
@@ -347,13 +430,25 @@ void app_main (void *argument) {
 				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				
+				LED_Movement();
 				break;
+			
 			
 			case 0x35: //stop
 				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
 				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				LED_Movement();	
+				break;
+			
+			default:
+				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
+				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
+				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
+				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				LED_Movement();	
 				break;
 		}
 	}
@@ -369,13 +464,14 @@ int main (void) {
 	//Semaphores
 	
 	InitGPIOMotor();
-	initPIT();
-	initUltrasound();
+	InitGPIOLED();
+	//initPIT();
+	//initUltrasound();
 	initUART(BAUD_RATE);
-	//initPWM();
+	initPWM();
 	osKernelInitialize();                 // Initialize CMSIS-RTOS
 	ultraSem = osSemaphoreNew(1, 0, NULL);
-  osThreadNew(ultrasonic, NULL, NULL);   
+  osThreadNew(app_main, NULL, NULL);   
   osKernelStart();       
   for (;;) {}
 }
