@@ -12,6 +12,9 @@
 #define PWM_TP0CH0 1 //PTC0
 #define PWM_TP0CH1 2 //PTC1
 
+//Buzzer
+#define BUZZER 1 //A1 -> TPM2_CH0
+
 //Ultrasound
 #define ECHO 31 //PTE31
 #define TRIGGER 2
