@@ -9,58 +9,10 @@
 #include "MKL25Z4.h"
 #include "Constants.h"
 #include "UART.h"
+#include "Motors.h"
+#include "PWM.h"
 
 /*
-volatile uint8_t data_to_send;
-volatile uint8_t received_data;
-
-void UART2_IRQHandler(void) 
-{
-	//If empty means triggered by UDRE else is RXC
-	if(UART2->S1 & UART_S1_TDRE_MASK) 
-	{
-		UART2_D = data_to_send;
-		UART2->C2 &= ~UART_C2_TIE_MASK;
-	}
-	else
-	{
-		 received_data = UART2_D;
-	}
-}
-
-void initUART(uint32_t baud) 
-{
-	uint32_t divisor, bus_clock;
-	
-	SIM->SCGC4 |= SIM_SCGC4_UART2_MASK;
-	SIM->SCGC5 |= SIM_SCGC5_PORTD_MASK;
-	
-	PORTD->PCR[UART2_TX_PIN] &= ~PORT_PCR_MUX_MASK;
-	PORTD->PCR[UART2_TX_PIN] |= PORT_PCR_MUX(3);
-	
-	PORTD->PCR[UART2_RX_PIN] &= ~PORT_PCR_MUX_MASK;
-	PORTD->PCR[UART2_RX_PIN] |= PORT_PCR_MUX(3);
-	
-	UART2->C2 &= ~((UART_C2_TE_MASK) | (UART_C2_RE_MASK));
-	
-	bus_clock = (DEFAULT_SYSTEM_CLOCK) / 2;
-	divisor = bus_clock / (baud * 16);
-	UART2->BDH = UART_BDH_SBR(divisor >> 8);
-	UART2->BDL = UART_BDL_SBR(divisor);
-	
-	UART2->C1 = 0;
-	UART2->C3 = 0;
-	UART2->S2 = 0;
-	//Add the two interrupt stuff
-	UART2->C2 |= ((UART_C2_TE_MASK) | (UART_C2_RE_MASK) |(UART_C2_RIE_MASK));
-	
-	NVIC_ClearPendingIRQ(UART2_IRQn);
-	NVIC_SetPriority(UART2_IRQn, 2);
-	NVIC_EnableIRQ(UART2_IRQn);
-}
-*/
-
-
 void InitGPIOMotor(void)
 {
 	// Enable Clock to PORTA
@@ -80,6 +32,7 @@ void InitGPIOMotor(void)
 	PORTC->PCR[PWM_TP0CH1] |= PORT_PCR_MUX(4); //Change to the TPM setting
 
 }
+*/
 
 
 volatile int counter = 0;
@@ -128,7 +81,7 @@ void PORTA_IRQHandler(void) //change X to whatever port the echo pin is supposed
 	PORTA_ISFR = 0xFFFFFFFF; //Clear flag (change to whatever port)
 }
 
-
+/*
 int calc_mod(int clkspd, int prescaler, int req_freq) {
 	int cycles_per_sec = clkspd / prescaler;
 	return (cycles_per_sec / req_freq) - 1;
@@ -178,6 +131,7 @@ void initPWM(void) {
 	TPM0_C0V = calc_cnv(TPM0_MOD, 0);
 	TPM0_C1V = calc_cnv(TPM0_MOD, 0);
 }
+*/
 
 volatile int consecutive = 0;
 volatile int value = 0;
@@ -267,78 +221,15 @@ void ultrasonic (void *argument) {
 	}
 }
 
-float trimming = 0.8;
+
 uint8_t data = 0;
 
 void app_main (void *argument) {
 	
   for (;;) {
 		data = returnData();
-		switch(data) {
-			case 0x31: //forward
-				//we can have two motors attached to one signal so makes life easier (frt left and back left to same TPM1 ch0, ch1) 
-				TPM1_C0V = calc_cnv(TPM1_MOD, 1) * trimming;  //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD //TPM1_CH0
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK //TPM1_CH1
-				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD //TPM0_CH0
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK //TP0_CH1
-				break;
-			
-			case 0x32: //back
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				break;
-			
-			case 0x33: //left forward curved
-				TPM1_C0V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0.25); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				break;
-			
-			case 0x34: //right forward curved
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0.25); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				break;
-			
-			case 0x36: //left backward curved
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0.25); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				break;
-			
-			case 0x37: //right backward curved
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0.25); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				break;
-			
-			case 0x38: //left strict
-				TPM1_C0V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				break;
-			
-			case 0x39: //right strict
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				break;
-			
-			case 0x35: //stop
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				break;
-		}
+		setDirection(data);
+		osDelay(10);
 	}
 }
  
@@ -346,16 +237,17 @@ int main (void) {
  
   // System Initialization
 	SystemCoreClockUpdate();
+	initUART(BAUD_RATE);
+	InitGPIOMotor();
+	initPWM();
   // ...
 	
 	//Control mechanisms
 	//Semaphores
 	
-	InitGPIOMotor();
 	initPIT();
 	initUltrasound();
-	initUART(BAUD_RATE);
-	initPWM();
+	
 	osKernelInitialize();                 // Initialize CMSIS-RTOS
 	ultraSem = osSemaphoreNew(1, 0, NULL);
   osThreadNew(app_main, NULL, NULL);   

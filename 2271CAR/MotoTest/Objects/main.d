@@ -13,3 +13,6 @@
 .\objects\main.o: Constants.h
 .\objects\main.o: UART.h
 .\objects\main.o: C:\Users\arv19\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.0\Device\Include\MKL25Z4.h
+.\objects\main.o: Motors.h
+.\objects\main.o: C:\Users\arv19\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.0\Device\Include\MKL25Z4.h
+.\objects\main.o: PWM.h

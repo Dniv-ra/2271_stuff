@@ -402,6 +402,26 @@
               <FileType>5</FileType>
               <FilePath>.\Constants.h</FilePath>
             </File>
+            <File>
+              <FileName>Motors.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\Motors.h</FilePath>
+            </File>
+            <File>
+              <FileName>Motors.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\Motors.c</FilePath>
+            </File>
+            <File>
+              <FileName>PWM.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\PWM.h</FilePath>
+            </File>
+            <File>
+              <FileName>PWM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\PWM.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
