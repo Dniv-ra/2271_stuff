@@ -7,29 +7,10 @@
 #include "cmsis_os2.h"
 
 #include "MKL25Z4.h"
+#include "Constants.h"
+#include "UART.h"
 
-#define MASK(x) (1 << x)
-#define UART2_TX_PIN 3
-#define UART2_RX_PIN 2				
-#define MOTOR_BACK_LEFT_FWD  2 
-#define MOTOR_BACK_LEFT_BK  1 
-#define MOTOR_BACK_RIGHT_FWD 5 
-#define MOTOR_BACK_RIGHT_BK  4
-#define MOTOR_FRONT_LEFT_FWD 29
-#define MOTOR_FRONT_LEFT_BK  30
-#define MOTOR_FRONT_RIGHT_FWD  4
-#define MOTOR_FRONT_RIGHT_BK   5 
-#define BAUD_RATE 9600
-
-#define PWM_TP1CH0 0 //PTB0
-#define PWM_TP1CH1 1 //PTB1
-#define PWM_TP0CH0 1 //PTC0
-#define PWM_TP0CH1 2 //PTC1
-
-#define ECHO 31 //PTE31
-#define TRIGGER 2
-
-
+/*
 volatile uint8_t data_to_send;
 volatile uint8_t received_data;
 
@@ -77,6 +58,7 @@ void initUART(uint32_t baud)
 	NVIC_SetPriority(UART2_IRQn, 2);
 	NVIC_EnableIRQ(UART2_IRQn);
 }
+*/
 
 
 void InitGPIOMotor(void)
@@ -286,74 +268,75 @@ void ultrasonic (void *argument) {
 }
 
 float trimming = 0.8;
-
+uint8_t data = 0;
 
 void app_main (void *argument) {
 	
   for (;;) {
-		switch(received_data) {
+		data = returnData();
+		switch(data) {
 			case 0x31: //forward
 				//we can have two motors attached to one signal so makes life easier (frt left and back left to same TPM1 ch0, ch1) 
-				TPM1_C0V = calc_cnv(TPM1_MOD, 1);  //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD //TPM1_CH0
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK //TPM1_CH1
-				TPM0_C0V = calc_cnv(TPM0_MOD, 1) * trimming; //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD //TPM0_CH0
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK //TP0_CH1
+				TPM1_C0V = calc_cnv(TPM1_MOD, 1) * trimming;  //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD //TPM1_CH0
+				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK //TPM1_CH1
+				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD //TPM0_CH0
+				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK //TP0_CH1
 				break;
 			
 			case 0x32: //back
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
+				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
+				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			
 			case 0x33: //left forward curved
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0.25); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM1_C0V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
+				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM0_C0V = calc_cnv(TPM0_MOD, 0.25); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
+				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			
 			case 0x34: //right forward curved
-				TPM1_C0V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0.25); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM1_C0V = calc_cnv(TPM1_MOD, 0.25); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
+				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
+				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			
 			case 0x36: //left backward curved
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0.25); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
+				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
+				TPM0_C1V = calc_cnv(TPM0_MOD, 0.25); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			
 			case 0x37: //right backward curved
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0.25); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
+				TPM1_C1V = calc_cnv(TPM1_MOD, 0.25); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
+				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			
 			case 0x38: //left strict
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM1_C0V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
+				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
+				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			
 			case 0x39: //right strict
-				TPM1_C0V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
+				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
+				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			
 			case 0x35: //stop
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
+				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
+				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 		}
 	}
@@ -372,10 +355,10 @@ int main (void) {
 	initPIT();
 	initUltrasound();
 	initUART(BAUD_RATE);
-	//initPWM();
+	initPWM();
 	osKernelInitialize();                 // Initialize CMSIS-RTOS
 	ultraSem = osSemaphoreNew(1, 0, NULL);
-  osThreadNew(ultrasonic, NULL, NULL);   
+  osThreadNew(app_main, NULL, NULL);   
   osKernelStart();       
   for (;;) {}
 }
