@@ -5,7 +5,7 @@
 <h2>Tool Versions:</h2>
 IDE-Version: µVision V5.29.0.0
 Copyright (C) 2019 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: John Doe, Bleh, LIC=----
+License Information: cat ire, arm, LIC=----
  
 Tool Versions:
 Toolchain:       MDK-Lite  Version: 5.29.0.0
@@ -21,7 +21,7 @@ Target DLL:      CMSIS_AGDI.dll V1.32.0.0
 Dialog DLL:      TARMCM1.DLL V1.14.1.0
  
 <h2>Project:</h2>
-C:\Users\arv19\Documents\Programming\2271\2271CAR\MotoTest\mototest.uvprojx
+C:\Users\jianh\Desktop\CG2271car\2271CAR\MotoTest\mototest.uvprojx
 Project File Date:  04/01/2022
 
 <h2>Output:</h2>
@@ -31,16 +31,17 @@ assembling startup_MKL25Z4.s...
 compiling PWM.c...
 compiling rtx_lib.c...
 compiling RTX_Config.c...
-compiling system_MKL25Z4.c...
 compiling UART.c...
 compiling Motors.c...
+compiling main.c...
+compiling system_MKL25Z4.c...
+compiling LED.c...
 compiling Buzzer.c...
 Buzzer.c(243): warning:  #223-D: function "abs" declared implicitly
   				noteDuration = (wholenote) / abs(divider);
 Buzzer.c: 1 warning, 0 errors
-compiling main.c...
 linking...
-Program Size: Code=9992 RO-data=496 RW-data=7776 ZI-data=264  
+Program Size: Code=11716 RO-data=560 RW-data=7824 ZI-data=264  
 ".\Objects\mototest.axf" - 0 Error(s), 1 Warning(s).
 
 <h2>Software Packages used:</h2>
@@ -63,10 +64,10 @@ Package Vendor: Keil
   .\RTE\CMSIS
   .\RTE\Device\MKL25Z128xxx4
   .\RTE\_Target_1
-  C:\Users\arv19\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include
-  C:\Users\arv19\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\RTOS2\Include
-  C:\Users\arv19\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\RTOS2\RTX\Include
-  C:\Users\arv19\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.0\Device\Include
+  C:\Users\jianh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\Core\Include
+  C:\Users\jianh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\RTOS2\Include
+  C:\Users\jianh\AppData\Local\Arm\Packs\ARM\CMSIS\5.6.0\CMSIS\RTOS2\RTX\Include
+  C:\Users\jianh\AppData\Local\Arm\Packs\Keil\Kinetis_KLxx_DFP\1.15.0\Device\Include
 
 <h2>Collection of Component Files used:</h2>
 
@@ -76,26 +77,26 @@ Package Vendor: Keil
    * Component: ARM::CMSIS:CORE:5.3.0
 
    * Component: ARM::CMSIS:RTOS2:Keil RTX5:Library:5.5.1
-      Include file:  CMSIS\RTOS2\RTX\Include\rtx_os.h
-      Include file:  CMSIS\RTOS2\RTX\Config\RTX_Config.h
-      Source file:   CMSIS\RTOS2\RTX\Config\RTX_Config.c
-      Source file:   CMSIS\RTOS2\RTX\Template\main.c
-      Source file:   CMSIS\RTOS2\RTX\Template\MemPool.c
-      Source file:   CMSIS\RTOS2\RTX\Template\Semaphore.c
       Source file:   CMSIS\RTOS2\RTX\Template\Events.c
-      Source file:   CMSIS\RTOS2\RTX\Template\MsgQueue.c
+      Source file:   CMSIS\RTOS2\RTX\Template\Timer.c
+      Source file:   CMSIS\RTOS2\RTX\Template\MemPool.c
+      Include file:  CMSIS\RTOS2\RTX\Include\rtx_os.h
+      Source file:   CMSIS\RTOS2\RTX\Template\Semaphore.c
       Source file:   CMSIS\RTOS2\RTX\Template\Mutex.c
       Source file:   CMSIS\RTOS2\RTX\Template\Thread.c
-      Source file:   CMSIS\RTOS2\RTX\Template\Timer.c
       Source file:   CMSIS\RTOS2\RTX\Template\svc_user.c
+      Source file:   CMSIS\RTOS2\RTX\Template\MsgQueue.c
       Source file:   CMSIS\RTOS2\RTX\Source\rtx_lib.c
+      Source file:   CMSIS\RTOS2\RTX\Template\main.c
+      Include file:  CMSIS\RTOS2\RTX\Config\RTX_Config.h
+      Source file:   CMSIS\RTOS2\RTX\Config\RTX_Config.c
       Library file:  CMSIS\RTOS2\RTX\Library\ARM\RTX_CM0.lib
 
    * Component: Keil::Device:Startup:2.5.0
-      Include file:  Device\Source\system_MKL25Z4.h
       Source file:   Device\Source\ARM\startup_MKL25Z4.s
       Source file:   Device\Source\system_MKL25Z4.c
-Build Time Elapsed:  00:00:00
+      Include file:  Device\Source\system_MKL25Z4.h
+Build Time Elapsed:  00:00:01
 </pre>
 </body>
 </html>
