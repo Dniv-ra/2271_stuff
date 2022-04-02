@@ -22,7 +22,7 @@ void initBuzzer(void) {
 	TPM2_C0SC |= (TPM_CnSC_ELSB(1) | TPM_CnSC_MSB(1));
 	
 	TPM2_MOD = calc_mod(48000000, 128, 262);
-	TPM2_C0V = calc_cnv(TPM0_MOD, 0.5);
+	TPM2_C0V = calc_cnv(TPM0_MOD, 0); //No music till actual playing
 }
 
 /*

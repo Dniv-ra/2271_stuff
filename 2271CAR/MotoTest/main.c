@@ -88,7 +88,7 @@ int count = 0;
 int tooClose = 0;
 int firsttime = 0;
 
-void ultrasonic (void *argument) {
+void ultrasonic (void *argument) { 
 	for(;;) {
 		//Send from trigger
 		PTE->PSOR |= MASK(TRIGGER);
@@ -135,15 +135,24 @@ void app_main (void *argument) {
 int numNotes = 0;
 int i = 0;
 
-void buzzer_thread (void *argument) {
+void buzzer_thread (void *argument) { 
+	//Blocking till start
 	while(returnData() == 0);
+	//First song
 	numNotes = getNumNotes();
-	for(;;) {
-		for(i = 0; i < numNotes; i+=2)
+	for(;data!= 0x40;) { //if data changes between the two breaks is issue (shouldnt)
+		for(i = 0; i < numNotes && data!= 0x40; i+=2)
 		{
-			playNote(i);
+			playNote(i); 
 			osDelay(200);
 		}
+	}
+	//Second song
+	numNotes = getNumNotes();
+	for(i = 0; i < numNotes; i+=2)
+	{
+		playNote(i); 
+		osDelay(200);
 	}
 }
 
