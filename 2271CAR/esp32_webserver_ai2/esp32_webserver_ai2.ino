@@ -158,6 +158,18 @@ void loop() {
     response = "Sharp Turn Right";
     Serial2.write(0x39);
   }
+    if(req.indexOf("changetone") != -1)
+  {
+//    digitalWrite(output26, LOW);
+    response = "Finished challenge run";
+    Serial2.write(0x40);
+  }
+      if(req.indexOf("autoon") != -1)
+  {
+//    digitalWrite(output26, LOW);
+    response = "Autonomous mode on";
+    Serial2.write(0x41);
+  }
   /*
        if (req.indexOf("on12") != -1) {digitalWrite(LED12, HIGH); estado = "LED12 ON";}
        if (req.indexOf("off12") != -1){digitalWrite(LED12, LOW); estado = "LED12 OFF";}

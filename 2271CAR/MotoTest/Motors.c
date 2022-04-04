@@ -121,13 +121,16 @@ void initPWM(void) {
 	TPM0_C1V = calc_cnv(TPM0_MOD, 0);
 }
 
-void setDirection(uint8_t data) {
+int cnv1 = 0;
+int cnv2 = 0;
+
+void setDirection(uint8_t data, float power) {
 	switch(data) {
 			case 0x31: //forward
 				//we can have two motors attached to one signal so makes life easier (frt left and back left to same TPM1 ch0, ch1) 
-				TPM1_C0V = calc_cnv(TPM1_MOD, 1);  //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD //TPM1_CH0
+				TPM1_C0V = calc_cnv(TPM1_MOD, power);  //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD //TPM1_CH0
 				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK //TPM1_CH1
-				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD //TPM0_CH0
+				TPM0_C0V = calc_cnv(TPM0_MOD, power); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD //TPM0_CH0
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK //TP0_CH1
 				break;
 			
@@ -141,12 +144,12 @@ void setDirection(uint8_t data) {
 			case 0x33: //left forward curved
 				TPM1_C0V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0.1); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
+				TPM0_C0V = calc_cnv(TPM0_MOD, 0.2); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			
 			case 0x34: //right forward curved
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0.1); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
+				TPM1_C0V = calc_cnv(TPM1_MOD, 0.2); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
@@ -156,12 +159,12 @@ void setDirection(uint8_t data) {
 				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0.1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
+				TPM0_C1V = calc_cnv(TPM0_MOD, 0.2); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			
 			case 0x37: //right backward curved
 				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0.1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM1_C1V = calc_cnv(TPM1_MOD, 0.2); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
@@ -187,5 +190,7 @@ void setDirection(uint8_t data) {
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 		}
+	cnv1 = TPM0_C0V;
+	cnv2 = TPM1_C0V;
 }
 

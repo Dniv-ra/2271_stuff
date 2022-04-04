@@ -35,7 +35,7 @@ void initPIT(void) {
 }
 
 volatile int ultraFlag = 0;
-osSemaphoreId_t ultraSem;
+osSemaphoreId_t ultraSem, autoSem;
 
 volatile int check = 0;
 
@@ -101,7 +101,7 @@ void ultrasonic (void *argument) {
 		osSemaphoreAcquire(ultraSem,osWaitForever);
 		//distances: 5cm <-> 300 cm : 0.000147s <-> 0.00882s 
 		distance = counter * 0.034 / 2;
-		if(distance < 10)
+		if(distance < 15)
 			tooClose = 1;
 		else {
 			tooClose = 0;
@@ -112,23 +112,57 @@ void ultrasonic (void *argument) {
 
 uint8_t data = 0;
 
-
+int flag = 0;
 void app_main (void *argument) {
-  for (;;) {
+  while(data != 0x41) {
 		data = returnData();
 		if (tooClose == 1 && data != 0x32) {
 		  if(firsttime == 0) {
-				setDirection(0x32);
+				setDirection(0x32, 1);
 				///osDelay(100);
 				//setDirection(0x35);
 				firsttime = 1;
 			} else {
-				setDirection(0x35);
+				setDirection(0x35, 1);
 			}
 		}
 		else {
-			setDirection(data);
+			setDirection(data, 0.5);
 		}
+	}
+	osSemaphoreRelease(autoSem);
+}
+
+int time = 0;
+void autonomous_thread(void *attr) {
+	osSemaphoreAcquire(autoSem, osWaitForever);
+	//Autonomous mode
+	//Move forward
+	while(!tooClose) {
+		setDirection(0x31, 0.5);
+	}	
+	//Stop at object
+	time = 0;
+	data = 0x35;
+	while(time < 500) {
+		setDirection(0x35, 0.5);
+		osDelay(1);
+		time++;
+	}
+	//Turn
+	time = 0;
+	data = 0x39;
+	while(time < 500) {
+		setDirection(0x39, 0.5);
+		osDelay(1);
+		time++;
+	}
+	time = 0;
+	data = 0x35;
+	while(time < 500) {
+		setDirection(0x35, 0.5);
+		osDelay(1);
+		time++;
 	}
 }
 
@@ -139,40 +173,43 @@ void buzzer_thread (void *argument) {
 	//Blocking till start
 	while(returnData() == 0);
 	//First song
-	numNotes = getNumNotes();
-	for(;data!= 0x40;) { //if data changes between the two breaks is issue (shouldnt)
-		for(i = 0; i < numNotes && data!= 0x40; i+=2)
+	numNotes = getNumNotes(0);
+	while(data!= 0x40) { //if data changes between the two breaks is issue (shouldnt)
+		for(i = 0; i < numNotes * 2 && data!= 0x40; i+=2)
 		{
 			playNote(i); 
 			osDelay(200);
 		}
 	}
 	//Second song
-	numNotes = getNumNotes();
-	for(i = 0; i < numNotes; i+=2)
+	numNotes = getNumNotes(1);
+	for(i = 0; i < numNotes * 2; i+=2)
 	{
-		playNote(i); 
-		osDelay(200);
+		playEndNote(i); 
+		osDelay(400);
 	}
+	TPM2_C0V = calc_cnv(TPM0_MOD, 0);
 }
 
 int j = 0;
 
-void led_thread (void *argument) {
+void led_red_thread (void *argument) {
 	 for (;;) {
-			data = returnData();
 			playRedLedSeq(returnDelay(data));
-			playGreenLedSeq(&j, data); 
 	 }
 }
 
-osThreadAttr_t buzzer_attr = {
-  .priority = osPriorityHigh              
+void led_green_thread (void *argument) {
+	 for (;;) {
+			playGreenLedSeq(&j, data); 
+			osDelay(100);
+	 }
+}
+
+osThreadAttr_t main_attr = {
+  .priority = osPriorityLow              
 };
 
-osThreadAttr_t ultra_attr = {
-  .priority = osPriorityHigh              
-};
  
 int main (void) {
  
@@ -193,10 +230,13 @@ int main (void) {
 	
 	osKernelInitialize();                 // Initialize CMSIS-RTOS
 	ultraSem = osSemaphoreNew(1, 0, NULL);
-  osThreadNew(buzzer_thread, NULL, &buzzer_attr);  
-	osThreadNew(led_thread, NULL, &buzzer_attr); 
-	osThreadNew(app_main, NULL, NULL);
-	osThreadNew(ultrasonic, NULL, &ultra_attr);
+	autoSem = osSemaphoreNew(1, 0, NULL);
+  osThreadNew(buzzer_thread, NULL, NULL);  
+	osThreadNew(led_red_thread, NULL, NULL); 
+	osThreadNew(led_green_thread, NULL, NULL); 
+	osThreadNew(app_main, NULL, &main_attr);
+	osThreadNew(ultrasonic, NULL, NULL);
+	osThreadNew(autonomous_thread, NULL, NULL);
   osKernelStart();       
   for (;;) {}
 }

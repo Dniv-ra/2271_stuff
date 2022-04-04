@@ -211,25 +211,29 @@ int melody[] = {
   NOTE_A4,8, NOTE_F5,4, NOTE_F5,8, NOTE_A4,2,
   NOTE_B4,8, NOTE_F5,4, NOTE_F5,8, NOTE_F5,-8, NOTE_E5,-8, NOTE_D5,-8,
   NOTE_C5,8, NOTE_E4,4, NOTE_E4,8, NOTE_C4,2,
-  
-  //game over sound
+ 
+
+};
+
+int endMelody[] = {
+	  //game over sound
   NOTE_C5,-4, NOTE_G4,-4, NOTE_E4,4, //45
   NOTE_A4,-8, NOTE_B4,-8, NOTE_A4,-8, NOTE_GS4,-8, NOTE_AS4,-8, NOTE_GS4,-8,
   NOTE_G4,8, NOTE_D4,8, NOTE_E4,-2,  
-
 };
 
 
 #define TEMPO 200
 int wholenote =  (60000 * 4) / TEMPO;
 
-int getNumNotes(void) {
-	int notes = sizeof(melody) / sizeof(melody[0]) / 2;
+int getNumNotes(int choice) {
+	int notes = 0;
+	if(choice == 0)
+		notes = sizeof(melody) / sizeof(melody[0]) / 2;
+	else
+		notes = sizeof(endMelody) / sizeof(endMelody[0]) / 2;
 	return notes;
 }
-
-int mod = 0;
-int cnv = 1;
 
 void playNote(int index) {
 			int wholenote = (60000 * 4) / TEMPO;
@@ -248,12 +252,32 @@ void playNote(int index) {
 			//tone(buzzer, melody[thisNote], noteDuration * 0.9);
 			if (melody[index] == REST) {
 				TPM2_C0V = calc_cnv(TPM0_MOD, 0);
-				cnv = TPM2_C0V;
 			} else {
 				TPM2_MOD = calc_mod(48000000, 128, melody[index]);
-				mod = TPM2_MOD;
 				TPM2_C0V = calc_cnv(TPM2_MOD, 0.5);
-				cnv = TPM2_C0V;
+			}
+}
+
+void playEndNote(int index) {
+			int wholenote = (60000 * 4) / TEMPO;
+			int divider = 0, noteDuration = 0;
+			divider = endMelody[index + 1];
+			if (divider > 0) {
+				// regular note, just proceed
+				noteDuration = (wholenote) / divider;
+			} else if (divider < 0) {
+				// dotted notes are represented with negative durations!!
+				noteDuration = (wholenote) / abs(divider);
+				noteDuration *= 1.5; // increases the duration in half for dotted notes
+			}
+
+			// we only play the note for 90% of the duration, leaving 10% as a pause
+			//tone(buzzer, melody[thisNote], noteDuration * 0.9);
+			if (endMelody[index] == REST) {
+				TPM2_C0V = calc_cnv(TPM0_MOD, 0);
+			} else {
+				TPM2_MOD = calc_mod(48000000, 128, endMelody[index]);
+				TPM2_C0V = calc_cnv(TPM2_MOD, 0.5);
 			}
 }
 

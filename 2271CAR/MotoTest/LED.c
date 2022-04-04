@@ -108,7 +108,7 @@ void Red_LED_Movement (void) {
 
 int delay = 0;
 int returnDelay(uint8_t data) {
-	if (data != 0x35 && data != 0x00) {
+	if (data != 0x35 && data != 0x00 && data != 0x40) {
 		delay = 500;
 	}
 	else {
@@ -134,7 +134,7 @@ void playRedLedSeq(int delay) {
 void playGreenLedSeq(int *i, uint8_t data) {
 		int LED_Array[8] = {5, 2, 4, 5, 12, 13, 16, 17};
 		
-		if(data != 0x35 && data != 0x00) {
+		if(data != 0x35 && data != 0x00 && data != 0x40) {
 			if (*i == 8) {
 				*i = 0;
 			}
