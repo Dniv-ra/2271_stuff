@@ -132,39 +132,78 @@ void app_main (void *argument) {
 	}
 	osSemaphoreRelease(autoSem);
 }
-
 int time = 0;
-void autonomous_thread(void *attr) {
-	osSemaphoreAcquire(autoSem, osWaitForever);
-	//Autonomous mode
-	//Move forward
-	while(!tooClose) {
-		setDirection(0x31, 0.5);
-	}	
-	//Stop at object
+void runCommand(int command, int duration) {
 	time = 0;
-	data = 0x35;
-	while(time < 500) {
-		setDirection(0x35, 0.5);
+	data = command; //0x39 is sharp right
+	while(time < duration) {
+		setDirection(command, 0.5);
 		osDelay(1);
 		time++;
 	}
-	//Turn
-	time = 0;
-	data = 0x39;
-	while(time < 500) {
-		setDirection(0x39, 0.5);
-		osDelay(1);
-		time++;
-	}
+	//Stop
 	time = 0;
 	data = 0x35;
-	while(time < 500) {
+	while(time < 100) { //0x35 is stop
 		setDirection(0x35, 0.5);
 		osDelay(1);
 		time++;
 	}
 }
+
+
+void autonomous_thread(void *attr) {
+	osSemaphoreAcquire(autoSem, osWaitForever);
+	int steps[] = {
+		0x39, 500, //turn right 1
+	  0x31, 500, //move forward 1
+		0x38, 500, //turn left 1
+		0x31, 500, //move forward 2
+		0x38, 500, //turn left 2
+		0x31, 500, //move forward 3
+		0x38, 500, //turn left 3
+		0x31, 500, //move forward 4
+		0x39, 500, //turn right 2
+	};
+	//Autonomous mode
+	//We will use all sharp turns here
+	//Move forward while no object is close
+	//Moving towards object
+	
+	/* 1. Move forward 0 */
+	while(!tooClose) { 
+		setDirection(0x31, 0.5); //0x31 is forward
+	}	
+	//Stop at object
+	time = 0;
+	data = 0x35; //0x35 is stop
+	while(time < 500) {
+		setDirection(0x35, 0.5);
+		osDelay(1);
+		time++;
+	}
+	
+	for(int k = 0; k < (sizeof(steps) / sizeof(steps[0])); k+=2){
+		runCommand(steps[k], steps[k+1]);
+	}
+	/* 11. Move Forward 5*/
+	tooClose = 0;
+	while(!tooClose) { 
+		setDirection(0x31, 0.5); //0x31 is forward
+	}	
+	//Stop at object
+	time = 0;
+	data = 0x35; //0x35 is stop
+	while(time < 500) {
+		setDirection(0x35, 0.5);
+		osDelay(1);
+		time++;
+	}
+	
+	/* 12. Detect finishing object and STOP*/
+}
+
+
 
 int numNotes = 0;
 int i = 0;

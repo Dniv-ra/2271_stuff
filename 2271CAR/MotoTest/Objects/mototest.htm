@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\mototest.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\mototest.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Sat Apr 02 18:04:28 2022
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Apr 04 16:48:23 2022
 <BR><P>
 <H3>Maximum Stack Usage =        176 bytes + Unknown(Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -94,7 +94,7 @@ Global Symbols
 <P><STRONG><a name="[28]"></a>__main</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry.o(.ARM.Collect$$$$00000000))
 <BR>[Address Reference Count : 1]<UL><LI> startup_mkl25z4.o(.text)
 </UL>
-<P><STRONG><a name="[a7]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
+<P><STRONG><a name="[a8]"></a>_main_stk</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry2.o(.ARM.Collect$$$$00000001))
 
 <P><STRONG><a name="[44]"></a>_main_scatterload</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry5.o(.ARM.Collect$$$$00000004))
 <BR><BR>[Calls]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
@@ -104,15 +104,15 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[45]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__scatterload
 </UL>
 
-<P><STRONG><a name="[a8]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
+<P><STRONG><a name="[a9]"></a>_main_clock</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry7b.o(.ARM.Collect$$$$00000008))
 
-<P><STRONG><a name="[a9]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
+<P><STRONG><a name="[aa]"></a>_main_cpp_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry8b.o(.ARM.Collect$$$$0000000A))
 
-<P><STRONG><a name="[aa]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
+<P><STRONG><a name="[ab]"></a>_main_init</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry9a.o(.ARM.Collect$$$$0000000B))
 
-<P><STRONG><a name="[ab]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
+<P><STRONG><a name="[ac]"></a>__rt_final_cpp</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry10a.o(.ARM.Collect$$$$0000000D))
 
-<P><STRONG><a name="[ac]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
+<P><STRONG><a name="[ad]"></a>__rt_final_exit</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, entry11a.o(.ARM.Collect$$$$0000000F))
 
 <P><STRONG><a name="[43]"></a>Reset_Handler</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, startup_mkl25z4.o(.text))
 
@@ -247,21 +247,21 @@ Global Symbols
 <P><STRONG><a name="[49]"></a>__aeabi_uidivmod</STRONG> (Thumb, 44 bytes, Stack size 12 bytes, uidiv.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 12<LI>Call Chain = __aeabi_uidivmod
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUART
+<BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUART
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemCoreClockUpdate
 <LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_idivmod
 </UL>
 
-<P><STRONG><a name="[ad]"></a>__aeabi_idiv</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, idiv.o(.text), UNUSED)
+<P><STRONG><a name="[ae]"></a>__aeabi_idiv</STRONG> (Thumb, 0 bytes, Stack size 16 bytes, idiv.o(.text), UNUSED)
 
 <P><STRONG><a name="[48]"></a>__aeabi_idivmod</STRONG> (Thumb, 40 bytes, Stack size 16 bytes, idiv.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = __aeabi_idivmod &rArr; __aeabi_uidivmod
 </UL>
 <BR>[Calls]<UL><LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
 </UL>
-<BR>[Called By]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_mod
-<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
+<BR>[Called By]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_mod
+<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
 </UL>
 
 <P><STRONG><a name="[61]"></a>__aeabi_memcpy</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, memcpya.o(.text))
@@ -272,20 +272,21 @@ Global Symbols
 <LI><a href="#[39]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osRtxMessageQueuePostProcess
 </UL>
 
-<P><STRONG><a name="[a5]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playGreenLedSeq
+<P><STRONG><a name="[8c]"></a>__aeabi_memcpy4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playGreenLedSeq
+<LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;autonomous_thread
 </UL>
 
-<P><STRONG><a name="[ae]"></a>__aeabi_memcpy8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
+<P><STRONG><a name="[af]"></a>__aeabi_memcpy8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memcpya.o(.text), UNUSED)
 
 <P><STRONG><a name="[4b]"></a>__aeabi_memset</STRONG> (Thumb, 14 bytes, Stack size 0 bytes, memseta.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[4c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_memset$wrapper
 <LI><a href="#[4a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memclr
 </UL>
 
-<P><STRONG><a name="[af]"></a>__aeabi_memset4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
+<P><STRONG><a name="[b0]"></a>__aeabi_memset4</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 
-<P><STRONG><a name="[b0]"></a>__aeabi_memset8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
+<P><STRONG><a name="[b1]"></a>__aeabi_memset8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 
 <P><STRONG><a name="[4a]"></a>__aeabi_memclr</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, memseta.o(.text))
 <BR><BR>[Calls]<UL><LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
@@ -299,16 +300,16 @@ Global Symbols
 <LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;svcRtxThreadNew
 </UL>
 
-<P><STRONG><a name="[b1]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
+<P><STRONG><a name="[b2]"></a>__aeabi_memclr8</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, memseta.o(.text), UNUSED)
 
 <P><STRONG><a name="[4c]"></a>_memset$wrapper</STRONG> (Thumb, 18 bytes, Stack size 8 bytes, memseta.o(.text), UNUSED)
 <BR><BR>[Calls]<UL><LI><a href="#[4b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memset
 </UL>
 
-<P><STRONG><a name="[91]"></a>__aeabi_fmul</STRONG> (Thumb, 122 bytes, Stack size 16 bytes, fmul.o(.text))
+<P><STRONG><a name="[93]"></a>__aeabi_fmul</STRONG> (Thumb, 122 bytes, Stack size 16 bytes, fmul.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = __aeabi_fmul
 </UL>
-<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
+<BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
 </UL>
 
 <P><STRONG><a name="[4d]"></a>__aeabi_dmul</STRONG> (Thumb, 202 bytes, Stack size 72 bytes, dmul.o(.text))
@@ -316,8 +317,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
+<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
 <LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ultrasonic
 </UL>
 
@@ -326,7 +327,7 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[50]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_float_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
+<BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
 </UL>
 
 <P><STRONG><a name="[51]"></a>__aeabi_i2d</STRONG> (Thumb, 34 bytes, Stack size 16 bytes, dflti.o(.text))
@@ -334,20 +335,20 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
+<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
 <LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ultrasonic
 </UL>
 
-<P><STRONG><a name="[92]"></a>__aeabi_f2iz</STRONG> (Thumb, 50 bytes, Stack size 0 bytes, ffixi.o(.text))
-<BR><BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
+<P><STRONG><a name="[94]"></a>__aeabi_f2iz</STRONG> (Thumb, 50 bytes, Stack size 0 bytes, ffixi.o(.text))
+<BR><BR>[Called By]<UL><LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
 </UL>
 
 <P><STRONG><a name="[85]"></a>OS_Tick_GetIRQn</STRONG> (Thumb, 6 bytes, Stack size 0 bytes, os_systick.o(.text.OS_Tick_GetIRQn))
 <BR><BR>[Called By]<UL><LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;svcRtxKernelStart
 </UL>
 
-<P><STRONG><a name="[b2]"></a>__I$use$fp</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, iusefp.o(.text), UNUSED)
+<P><STRONG><a name="[b3]"></a>__I$use$fp</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, iusefp.o(.text), UNUSED)
 
 <P><STRONG><a name="[52]"></a>__aeabi_ddiv</STRONG> (Thumb, 234 bytes, Stack size 40 bytes, ddiv.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = __aeabi_ddiv &rArr; _double_round
@@ -362,8 +363,8 @@ Global Symbols
 </UL>
 <BR>[Calls]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_llsr
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
+<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
 </UL>
 
 <P><STRONG><a name="[56]"></a>__aeabi_d2f</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, d2f.o(.text))
@@ -374,9 +375,9 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ultrasonic
 </UL>
 
-<P><STRONG><a name="[b3]"></a>__aeabi_cfcmpeq</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, cfcmple.o(.text), UNUSED)
+<P><STRONG><a name="[b4]"></a>__aeabi_cfcmpeq</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, cfcmple.o(.text), UNUSED)
 
-<P><STRONG><a name="[a6]"></a>__aeabi_cfcmple</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, cfcmple.o(.text))
+<P><STRONG><a name="[a7]"></a>__aeabi_cfcmple</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, cfcmple.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ultrasonic
 </UL>
 
@@ -387,7 +388,7 @@ Global Symbols
 <LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 
-<P><STRONG><a name="[b4]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, llushr.o(.text), UNUSED)
+<P><STRONG><a name="[b5]"></a>_ll_ushift_r</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, llushr.o(.text), UNUSED)
 
 <P><STRONG><a name="[57]"></a>_float_round</STRONG> (Thumb, 16 bytes, Stack size 0 bytes, fepilogue.o(.text))
 <BR><BR>[Called By]<UL><LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
@@ -424,7 +425,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[44]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_main_scatterload
 </UL>
 
-<P><STRONG><a name="[b5]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
+<P><STRONG><a name="[b6]"></a>__scatterload_rt2</STRONG> (Thumb, 0 bytes, Stack size 0 bytes, init.o(.text), UNUSED)
 
 <P><STRONG><a name="[59]"></a>__aeabi_llsl</STRONG> (Thumb, 32 bytes, Stack size 8 bytes, llshl.o(.text))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __aeabi_llsl
@@ -432,11 +433,11 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[4e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;_double_epilogue
 </UL>
 
-<P><STRONG><a name="[b6]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, llshl.o(.text), UNUSED)
+<P><STRONG><a name="[b7]"></a>_ll_shift_l</STRONG> (Thumb, 0 bytes, Stack size 8 bytes, llshl.o(.text), UNUSED)
 
-<P><STRONG><a name="[b7]"></a>__decompress</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __dczerorl2.o(.text), UNUSED)
+<P><STRONG><a name="[b8]"></a>__decompress</STRONG> (Thumb, 0 bytes, Stack size unknown bytes, __dczerorl2.o(.text), UNUSED)
 
-<P><STRONG><a name="[b8]"></a>__decompress1</STRONG> (Thumb, 86 bytes, Stack size unknown bytes, __dczerorl2.o(.text), UNUSED)
+<P><STRONG><a name="[b9]"></a>__decompress1</STRONG> (Thumb, 86 bytes, Stack size unknown bytes, __dczerorl2.o(.text), UNUSED)
 
 <P><STRONG><a name="[7d]"></a>OS_Tick_AcknowledgeIRQ</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, os_systick.o(.text.OS_Tick_AcknowledgeIRQ))
 <BR><BR>[Called By]<UL><LI><a href="#[47]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osRtxTick_Handler
@@ -454,11 +455,12 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[2c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;svcRtxKernelStart
 </UL>
 
-<P><STRONG><a name="[8c]"></a>osDelay</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, rtx_delay.o(.text.osDelay))
+<P><STRONG><a name="[8d]"></a>osDelay</STRONG> (Thumb, 40 bytes, Stack size 8 bytes, rtx_delay.o(.text.osDelay))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = osDelay
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playRedLedSeq
+<BR>[Called By]<UL><LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playRedLedSeq
 <LI><a href="#[41]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ultrasonic
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;runCommand
 <LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_green_thread
 <LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_thread
 <LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;autonomous_thread
@@ -472,7 +474,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a4]"></a>osKernelStart</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, rtx_kernel.o(.text.osKernelStart))
+<P><STRONG><a name="[a6]"></a>osKernelStart</STRONG> (Thumb, 36 bytes, Stack size 8 bytes, rtx_kernel.o(.text.osKernelStart))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = osKernelStart
 </UL>
 <BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -735,7 +737,7 @@ Global Symbols
 <LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;autonomous_thread
 </UL>
 
-<P><STRONG><a name="[a2]"></a>osSemaphoreNew</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, rtx_semaphore.o(.text.osSemaphoreNew))
+<P><STRONG><a name="[a4]"></a>osSemaphoreNew</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, rtx_semaphore.o(.text.osSemaphoreNew))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = osSemaphoreNew
 </UL>
 <BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
@@ -754,17 +756,17 @@ Global Symbols
 <P><STRONG><a name="[3b]"></a>osThreadExit</STRONG> (Thumb, 12 bytes, Stack size 0 bytes, rtx_thread.o(.text.osThreadExit))
 <BR>[Address Reference Count : 1]<UL><LI> rtx_thread.o(.text.svcRtxThreadNew)
 </UL>
-<P><STRONG><a name="[a3]"></a>osThreadNew</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, rtx_thread.o(.text.osThreadNew))
+<P><STRONG><a name="[a5]"></a>osThreadNew</STRONG> (Thumb, 36 bytes, Stack size 16 bytes, rtx_thread.o(.text.osThreadNew))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = osThreadNew
 </UL>
 <BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a0]"></a>InitGPIOGreenLED</STRONG> (Thumb, 262 bytes, Stack size 0 bytes, led.o(i.InitGPIOGreenLED))
+<P><STRONG><a name="[a2]"></a>InitGPIOGreenLED</STRONG> (Thumb, 262 bytes, Stack size 0 bytes, led.o(i.InitGPIOGreenLED))
 <BR><BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[a1]"></a>InitGPIORedLED</STRONG> (Thumb, 80 bytes, Stack size 0 bytes, led.o(i.InitGPIORedLED))
+<P><STRONG><a name="[a3]"></a>InitGPIORedLED</STRONG> (Thumb, 80 bytes, Stack size 0 bytes, led.o(i.InitGPIORedLED))
 <BR><BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
@@ -805,11 +807,11 @@ Global Symbols
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemCoreClockUpdate
 </UL>
 
-<P><STRONG><a name="[b9]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
+<P><STRONG><a name="[ba]"></a>__scatterload_copy</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_copy), UNUSED)
 
-<P><STRONG><a name="[ba]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
+<P><STRONG><a name="[bb]"></a>__scatterload_null</STRONG> (Thumb, 2 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_null), UNUSED)
 
-<P><STRONG><a name="[bb]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
+<P><STRONG><a name="[bc]"></a>__scatterload_zeroinit</STRONG> (Thumb, 14 bytes, Stack size unknown bytes, handlers.o(i.__scatterload_zeroinit), UNUSED)
 
 <P><STRONG><a name="[40]"></a>app_main</STRONG> (Thumb, 98 bytes, Stack size 8 bytes, main.o(i.app_main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = app_main &rArr; setDirection &rArr; calc_cnv &rArr; __aeabi_i2f &rArr; _float_epilogue
@@ -820,12 +822,14 @@ Global Symbols
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.main)
 </UL>
-<P><STRONG><a name="[42]"></a>autonomous_thread</STRONG> (Thumb, 194 bytes, Stack size 8 bytes, main.o(i.autonomous_thread))
-<BR><BR>[Stack]<UL><LI>Max Depth = 68<LI>Call Chain = autonomous_thread &rArr; setDirection &rArr; calc_cnv &rArr; __aeabi_i2f &rArr; _float_epilogue
+<P><STRONG><a name="[42]"></a>autonomous_thread</STRONG> (Thumb, 208 bytes, Stack size 88 bytes, main.o(i.autonomous_thread))
+<BR><BR>[Stack]<UL><LI>Max Depth = 164<LI>Call Chain = autonomous_thread &rArr; runCommand &rArr; setDirection &rArr; calc_cnv &rArr; __aeabi_i2f &rArr; _float_epilogue
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setDirection
 <LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSemaphoreAcquire
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;runCommand
+<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.main)
 </UL>
@@ -833,87 +837,87 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 176<LI>Call Chain = buzzer_thread &rArr; playNote &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; __aeabi_llsl
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;returnData
-<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
-<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getNumNotes
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
+<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getNumNotes
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.main)
 </UL>
-<P><STRONG><a name="[90]"></a>calc_cnv</STRONG> (Thumb, 28 bytes, Stack size 24 bytes, pwm.o(i.calc_cnv))
+<P><STRONG><a name="[92]"></a>calc_cnv</STRONG> (Thumb, 28 bytes, Stack size 24 bytes, pwm.o(i.calc_cnv))
 <BR><BR>[Stack]<UL><LI>Max Depth = 44<LI>Call Chain = calc_cnv &rArr; __aeabi_i2f &rArr; _float_epilogue
 </UL>
 <BR>[Calls]<UL><LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2f
-<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
-<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2iz
+<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_fmul
+<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_f2iz
 </UL>
 <BR>[Called By]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setDirection
-<LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initMotors
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initBuzzer
+<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initMotors
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initBuzzer
 <LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_thread
 </UL>
 
-<P><STRONG><a name="[93]"></a>calc_mod</STRONG> (Thumb, 30 bytes, Stack size 24 bytes, pwm.o(i.calc_mod))
+<P><STRONG><a name="[95]"></a>calc_mod</STRONG> (Thumb, 30 bytes, Stack size 24 bytes, pwm.o(i.calc_mod))
 <BR><BR>[Stack]<UL><LI>Max Depth = 52<LI>Call Chain = calc_mod &rArr; __aeabi_idivmod &rArr; __aeabi_uidivmod
 </UL>
 <BR>[Calls]<UL><LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_idivmod
 </UL>
-<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
-<LI><a href="#[8f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initMotors
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initBuzzer
+<BR>[Called By]<UL><LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playNote
+<LI><a href="#[91]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playEndNote
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initMotors
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initBuzzer
 </UL>
 
-<P><STRONG><a name="[8d]"></a>getNumNotes</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, buzzer.o(i.getNumNotes))
+<P><STRONG><a name="[8f]"></a>getNumNotes</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, buzzer.o(i.getNumNotes))
 <BR><BR>[Called By]<UL><LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_thread
 </UL>
 
-<P><STRONG><a name="[94]"></a>initBuzzer</STRONG> (Thumb, 170 bytes, Stack size 8 bytes, buzzer.o(i.initBuzzer))
+<P><STRONG><a name="[96]"></a>initBuzzer</STRONG> (Thumb, 170 bytes, Stack size 8 bytes, buzzer.o(i.initBuzzer))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = initBuzzer &rArr; calc_mod &rArr; __aeabi_idivmod &rArr; __aeabi_uidivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_mod
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
+<BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_mod
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
 </UL>
 <BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[95]"></a>initMotors</STRONG> (Thumb, 420 bytes, Stack size 8 bytes, motors.o(i.initMotors))
+<P><STRONG><a name="[97]"></a>initMotors</STRONG> (Thumb, 420 bytes, Stack size 8 bytes, motors.o(i.initMotors))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = initMotors &rArr; calc_mod &rArr; __aeabi_idivmod &rArr; __aeabi_uidivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_mod
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
+<BR>[Calls]<UL><LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_mod
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
 </UL>
 <BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[96]"></a>initPIT</STRONG> (Thumb, 70 bytes, Stack size 8 bytes, main.o(i.initPIT))
+<P><STRONG><a name="[98]"></a>initPIT</STRONG> (Thumb, 70 bytes, Stack size 8 bytes, main.o(i.initPIT))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = initPIT &rArr; __NVIC_SetPriority
 </UL>
-<BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
+<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
 </UL>
 <BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[9a]"></a>initUART</STRONG> (Thumb, 200 bytes, Stack size 16 bytes, uart.o(i.initUART))
+<P><STRONG><a name="[9c]"></a>initUART</STRONG> (Thumb, 200 bytes, Stack size 16 bytes, uart.o(i.initUART))
 <BR><BR>[Stack]<UL><LI>Max Depth = 28<LI>Call Chain = initUART &rArr; __aeabi_uidivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
+<BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
 <LI><a href="#[49]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_uidivmod
 </UL>
 <BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[9c]"></a>initUltrasound</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, main.o(i.initUltrasound))
+<P><STRONG><a name="[9e]"></a>initUltrasound</STRONG> (Thumb, 124 bytes, Stack size 8 bytes, main.o(i.initUltrasound))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = initUltrasound &rArr; __NVIC_SetPriority
 </UL>
-<BR>[Calls]<UL><LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
-<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
-<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
+<BR>[Calls]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_SetPriority
+<LI><a href="#[9b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_EnableIRQ
+<LI><a href="#[99]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__NVIC_ClearPendingIRQ
 </UL>
 <BR>[Called By]<UL><LI><a href="#[26]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
@@ -921,34 +925,34 @@ Global Symbols
 <P><STRONG><a name="[3f]"></a>led_green_thread</STRONG> (Thumb, 20 bytes, Stack size 0 bytes, main.o(i.led_green_thread))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = led_green_thread &rArr; playGreenLedSeq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playGreenLedSeq
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+<BR>[Calls]<UL><LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playGreenLedSeq
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.main)
 </UL>
 <P><STRONG><a name="[3e]"></a>led_red_thread</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, main.o(i.led_red_thread))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = led_red_thread &rArr; playRedLedSeq &rArr; osDelay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;returnDelay
-<LI><a href="#[9f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playRedLedSeq
+<BR>[Calls]<UL><LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;returnDelay
+<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;playRedLedSeq
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.main)
 </UL>
 <P><STRONG><a name="[26]"></a>main</STRONG> (Thumb, 136 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = main &rArr; initMotors &rArr; calc_mod &rArr; __aeabi_idivmod &rArr; __aeabi_uidivmod
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadNew
-<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSemaphoreNew
-<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelStart
+<BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osThreadNew
+<LI><a href="#[a4]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSemaphoreNew
+<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelStart
 <LI><a href="#[5d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osKernelInitialize
-<LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUART
-<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initMotors
-<LI><a href="#[94]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initBuzzer
+<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUART
+<LI><a href="#[97]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initMotors
+<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initBuzzer
 <LI><a href="#[88]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;SystemCoreClockUpdate
-<LI><a href="#[a1]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitGPIORedLED
-<LI><a href="#[a0]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitGPIOGreenLED
-<LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUltrasound
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPIT
+<LI><a href="#[a3]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitGPIORedLED
+<LI><a href="#[a2]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;InitGPIOGreenLED
+<LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUltrasound
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPIT
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> entry9a.o(.ARM.Collect$$$$0000000B)
 </UL>
@@ -965,12 +969,12 @@ Global Symbols
 <P><STRONG><a name="[30]"></a>osRtxIdleThread</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, rtx_config.o(i.osRtxIdleThread))
 <BR>[Address Reference Count : 1]<UL><LI> rtx_thread.o(.text.osRtxThreadStartup)
 </UL>
-<P><STRONG><a name="[8f]"></a>playEndNote</STRONG> (Thumb, 154 bytes, Stack size 40 bytes, buzzer.o(i.playEndNote))
+<P><STRONG><a name="[91]"></a>playEndNote</STRONG> (Thumb, 154 bytes, Stack size 40 bytes, buzzer.o(i.playEndNote))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = playEndNote &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; __aeabi_llsl
 </UL>
 <BR>[Calls]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
-<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_mod
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_mod
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
 <LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_idivmod
@@ -978,20 +982,20 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_thread
 </UL>
 
-<P><STRONG><a name="[9d]"></a>playGreenLedSeq</STRONG> (Thumb, 156 bytes, Stack size 48 bytes, led.o(i.playGreenLedSeq))
+<P><STRONG><a name="[9f]"></a>playGreenLedSeq</STRONG> (Thumb, 156 bytes, Stack size 48 bytes, led.o(i.playGreenLedSeq))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = playGreenLedSeq
 </UL>
-<BR>[Calls]<UL><LI><a href="#[a5]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
+<BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_memcpy4
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_green_thread
 </UL>
 
-<P><STRONG><a name="[8e]"></a>playNote</STRONG> (Thumb, 154 bytes, Stack size 40 bytes, buzzer.o(i.playNote))
+<P><STRONG><a name="[90]"></a>playNote</STRONG> (Thumb, 154 bytes, Stack size 40 bytes, buzzer.o(i.playNote))
 <BR><BR>[Stack]<UL><LI>Max Depth = 168<LI>Call Chain = playNote &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; __aeabi_llsl
 </UL>
 <BR>[Calls]<UL><LI><a href="#[54]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2iz
-<LI><a href="#[93]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_mod
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
+<LI><a href="#[95]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_mod
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
 <LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[48]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_idivmod
@@ -999,10 +1003,10 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[3d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;buzzer_thread
 </UL>
 
-<P><STRONG><a name="[9f]"></a>playRedLedSeq</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, led.o(i.playRedLedSeq))
+<P><STRONG><a name="[a1]"></a>playRedLedSeq</STRONG> (Thumb, 76 bytes, Stack size 8 bytes, led.o(i.playRedLedSeq))
 <BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = playRedLedSeq &rArr; osDelay
 </UL>
-<BR>[Calls]<UL><LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+<BR>[Calls]<UL><LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
 </UL>
 <BR>[Called By]<UL><LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_red_thread
 </UL>
@@ -1012,17 +1016,27 @@ Global Symbols
 <LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_main
 </UL>
 
-<P><STRONG><a name="[9e]"></a>returnDelay</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, led.o(i.returnDelay))
+<P><STRONG><a name="[a0]"></a>returnDelay</STRONG> (Thumb, 36 bytes, Stack size 0 bytes, led.o(i.returnDelay))
 <BR><BR>[Called By]<UL><LI><a href="#[3e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;led_red_thread
+</UL>
+
+<P><STRONG><a name="[8e]"></a>runCommand</STRONG> (Thumb, 102 bytes, Stack size 16 bytes, main.o(i.runCommand))
+<BR><BR>[Stack]<UL><LI>Max Depth = 76<LI>Call Chain = runCommand &rArr; setDirection &rArr; calc_cnv &rArr; __aeabi_i2f &rArr; _float_epilogue
+</UL>
+<BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;setDirection
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+</UL>
+<BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;autonomous_thread
 </UL>
 
 <P><STRONG><a name="[8b]"></a>setDirection</STRONG> (Thumb, 592 bytes, Stack size 16 bytes, motors.o(i.setDirection))
 <BR><BR>[Stack]<UL><LI>Max Depth = 60<LI>Call Chain = setDirection &rArr; calc_cnv &rArr; __aeabi_i2f &rArr; _float_epilogue
 </UL>
 <BR>[Calls]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__ARM_common_switch8
-<LI><a href="#[90]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
+<LI><a href="#[92]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calc_cnv
 </UL>
-<BR>[Called By]<UL><LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;autonomous_thread
+<BR>[Called By]<UL><LI><a href="#[8e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;runCommand
+<LI><a href="#[42]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;autonomous_thread
 <LI><a href="#[40]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;app_main
 </UL>
 
@@ -1030,39 +1044,39 @@ Global Symbols
 <BR><BR>[Stack]<UL><LI>Max Depth = 144<LI>Call Chain = ultrasonic &rArr; __aeabi_dmul &rArr; _double_epilogue &rArr; __aeabi_llsl
 </UL>
 <BR>[Calls]<UL><LI><a href="#[80]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osSemaphoreAcquire
-<LI><a href="#[8c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
+<LI><a href="#[8d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;osDelay
 <LI><a href="#[51]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_i2d
 <LI><a href="#[4d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_dmul
 <LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_ddiv
 <LI><a href="#[56]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_d2f
-<LI><a href="#[a6]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmple
+<LI><a href="#[a7]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__aeabi_cfcmple
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> main.o(i.main)
 </UL><P>
 <H3>
 Local Symbols
 </H3>
-<P><STRONG><a name="[97]"></a>__NVIC_ClearPendingIRQ</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, main.o(i.__NVIC_ClearPendingIRQ))
-<BR><BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUltrasound
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPIT
+<P><STRONG><a name="[99]"></a>__NVIC_ClearPendingIRQ</STRONG> (Thumb, 18 bytes, Stack size 0 bytes, main.o(i.__NVIC_ClearPendingIRQ))
+<BR><BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUltrasound
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPIT
 </UL>
 
-<P><STRONG><a name="[99]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, main.o(i.__NVIC_EnableIRQ))
-<BR><BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUltrasound
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPIT
+<P><STRONG><a name="[9b]"></a>__NVIC_EnableIRQ</STRONG> (Thumb, 26 bytes, Stack size 0 bytes, main.o(i.__NVIC_EnableIRQ))
+<BR><BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUltrasound
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPIT
 </UL>
 
-<P><STRONG><a name="[98]"></a>__NVIC_SetPriority</STRONG> (Thumb, 110 bytes, Stack size 8 bytes, main.o(i.__NVIC_SetPriority))
+<P><STRONG><a name="[9a]"></a>__NVIC_SetPriority</STRONG> (Thumb, 110 bytes, Stack size 8 bytes, main.o(i.__NVIC_SetPriority))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __NVIC_SetPriority
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUltrasound
-<LI><a href="#[96]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPIT
+<BR>[Called By]<UL><LI><a href="#[9e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUltrasound
+<LI><a href="#[98]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPIT
 </UL>
 
-<P><STRONG><a name="[9b]"></a>__NVIC_SetPriority</STRONG> (Thumb, 110 bytes, Stack size 8 bytes, uart.o(i.__NVIC_SetPriority))
+<P><STRONG><a name="[9d]"></a>__NVIC_SetPriority</STRONG> (Thumb, 110 bytes, Stack size 8 bytes, uart.o(i.__NVIC_SetPriority))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = __NVIC_SetPriority
 </UL>
-<BR>[Called By]<UL><LI><a href="#[9a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUART
+<BR>[Called By]<UL><LI><a href="#[9c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initUART
 </UL>
 
 <P><STRONG><a name="[2b]"></a>svcRtxKernelInitialize</STRONG> (Thumb, 328 bytes, Stack size 32 bytes, rtx_kernel.o(.text.svcRtxKernelInitialize))
