@@ -4,7 +4,7 @@
 #define MYBUZZER
 	void initBuzzer(void);
 	int getNumNotes(int choice);
-	void playNote(int index);
-	void playEndNote(int index);
+	int playNote(int index);
+	int playEndNote(int index);
 #endif
 

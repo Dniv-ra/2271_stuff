@@ -1,5 +1,6 @@
 #include "MKL25Z4.h"
 #include "math.h"
+#include "stdlib.h"
 #include "PWM.h"
 #include "Constants.h"
 #include "Buzzer.h"
@@ -235,7 +236,7 @@ int getNumNotes(int choice) {
 	return notes;
 }
 
-void playNote(int index) {
+int playNote(int index) {
 			int wholenote = (60000 * 4) / TEMPO;
 			int divider = 0, noteDuration = 0;
 			divider = melody[index + 1];
@@ -256,9 +257,10 @@ void playNote(int index) {
 				TPM2_MOD = calc_mod(48000000, 128, melody[index]);
 				TPM2_C0V = calc_cnv(TPM2_MOD, 0.5);
 			}
+			return noteDuration;
 }
 
-void playEndNote(int index) {
+int playEndNote(int index) {
 			int wholenote = (60000 * 4) / TEMPO;
 			int divider = 0, noteDuration = 0;
 			divider = endMelody[index + 1];
@@ -279,6 +281,7 @@ void playEndNote(int index) {
 				TPM2_MOD = calc_mod(48000000, 128, endMelody[index]);
 				TPM2_C0V = calc_cnv(TPM2_MOD, 0.5);
 			}
+			return noteDuration;
 }
 
 /*

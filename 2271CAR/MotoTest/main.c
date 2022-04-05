@@ -174,6 +174,7 @@ void autonomous_thread(void *attr) {
 	for(int k = 0; k < (sizeof(steps) / sizeof(steps[0])); k+=2){
 		runCommand(steps[k], steps[k+1]);
 	}
+	
 	/* 11. Move Forward 5*/
 	tooClose = 0;
 	while(!tooClose) { 
@@ -181,7 +182,7 @@ void autonomous_thread(void *attr) {
 	}	
 	//Stop at object
 	time = 0;
-	data = 0x35; //0x35 is stop
+	data = 0x40; //Buzzer change tone
 	while(time < 500) {
 		setDirection(0x35, 0.5);
 		osDelay(1);
@@ -195,6 +196,7 @@ void autonomous_thread(void *attr) {
 
 int numNotes = 0;
 int i = 0;
+int dur = 0;
 
 void buzzer_thread (void *argument) { 
 	//Blocking till start
@@ -204,16 +206,16 @@ void buzzer_thread (void *argument) {
 	while(data!= 0x40) { //if data changes between the two breaks is issue (shouldnt)
 		for(i = 0; i < numNotes * 2 && data!= 0x40; i+=2)
 		{
-			playNote(i); 
-			osDelay(200);
+			dur = playNote(i); 
+			osDelay(dur);
 		}
 	}
 	//Second song
 	numNotes = getNumNotes(1);
 	for(i = 0; i < numNotes * 2; i+=2)
 	{
-		playEndNote(i); 
-		osDelay(400);
+		dur = playEndNote(i); 
+		osDelay(dur);
 	}
 	TPM2_C0V = calc_cnv(TPM0_MOD, 0);
 }
