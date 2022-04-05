@@ -101,7 +101,7 @@ void ultrasonic (void *argument) {
 		osSemaphoreAcquire(ultraSem,osWaitForever);
 		//distances: 5cm <-> 300 cm : 0.000147s <-> 0.00882s 
 		distance = counter * 0.034 / 2;
-		if(distance < 15)
+		if(distance < 18)
 			tooClose = 1;
 		else {
 			tooClose = 0;
@@ -116,19 +116,7 @@ int flag = 0;
 void app_main (void *argument) {
   while(data != 0x41) {
 		data = returnData();
-		if (tooClose == 1 && data != 0x32) {
-		  if(firsttime == 0) {
-				setDirection(0x32, 1);
-				///osDelay(100);
-				//setDirection(0x35);
-				firsttime = 1;
-			} else {
-				setDirection(0x35, 1);
-			}
-		}
-		else {
-			setDirection(data, 0.5);
-		}
+		setDirection(data, 1);
 	}
 	osSemaphoreRelease(autoSem);
 }
@@ -155,15 +143,15 @@ void runCommand(int command, int duration) {
 void autonomous_thread(void *attr) {
 	osSemaphoreAcquire(autoSem, osWaitForever);
 	int steps[] = {
-		0x39, 500, //turn right 1
-	  0x31, 500, //move forward 1
-		0x38, 500, //turn left 1
-		0x31, 500, //move forward 2
-		0x38, 500, //turn left 2
-		0x31, 500, //move forward 3
-		0x38, 500, //turn left 3
-		0x31, 500, //move forward 4
-		0x39, 500, //turn right 2
+		0x39, 340, //turn right 1
+	  0x31, 800, //move forward 1
+		0x38, 540, //turn left 1
+		0x31, 800, //move forward 2
+		0x38, 580, //turn left 2
+		0x31, 800, //move forward 3
+		0x38, 580, //turn left 3
+		0x31, 800, //move forward 4
+		0x39, 340, //turn right 2
 	};
 	//Autonomous mode
 	//We will use all sharp turns here

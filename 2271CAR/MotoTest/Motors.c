@@ -123,14 +123,14 @@ void initPWM(void) {
 
 int cnv1 = 0;
 int cnv2 = 0;
-
+float trimming = 0.6;
 void setDirection(uint8_t data, float power) {
 	switch(data) {
 			case 0x31: //forward
 				//we can have two motors attached to one signal so makes life easier (frt left and back left to same TPM1 ch0, ch1) 
-				TPM1_C0V = calc_cnv(TPM1_MOD, power);  //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD //TPM1_CH0
+				TPM1_C0V = calc_cnv(TPM1_MOD, power) * trimming;  //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD //TPM1_CH0
 				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK //TPM1_CH1
-				TPM0_C0V = calc_cnv(TPM0_MOD, power); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD //TPM0_CH0
+				TPM0_C0V = calc_cnv(TPM0_MOD, power) ; //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD //TPM0_CH0
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK //TP0_CH1
 				break;
 			
@@ -170,16 +170,16 @@ void setDirection(uint8_t data, float power) {
 				break;
 			
 			case 0x38: //left strict
-				TPM1_C0V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
+				TPM1_C0V = calc_cnv(TPM1_MOD, 0.8); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
+				TPM0_C1V = calc_cnv(TPM0_MOD, 0.8); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			
 			case 0x39: //right strict
 				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 1); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 1); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
+				TPM1_C1V = calc_cnv(TPM1_MOD, 0.8); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM0_C0V = calc_cnv(TPM0_MOD, 0.8); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			
