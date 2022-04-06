@@ -123,7 +123,7 @@ void initPWM(void) {
 
 int cnv1 = 0;
 int cnv2 = 0;
-float trimming = 0.6;
+float trimming = 0.55;
 void setDirection(uint8_t data, float power) {
 	switch(data) {
 			case 0x31: //forward

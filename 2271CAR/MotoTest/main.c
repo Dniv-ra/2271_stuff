@@ -125,7 +125,7 @@ void runCommand(int command, int duration) {
 	time = 0;
 	data = command; //0x39 is sharp right
 	while(time < duration) {
-		setDirection(command, 0.5);
+		setDirection(command, 1);
 		osDelay(1);
 		time++;
 	}
@@ -133,7 +133,7 @@ void runCommand(int command, int duration) {
 	time = 0;
 	data = 0x35;
 	while(time < 100) { //0x35 is stop
-		setDirection(0x35, 0.5);
+		setDirection(0x35, 1);
 		osDelay(1);
 		time++;
 	}
@@ -143,15 +143,15 @@ void runCommand(int command, int duration) {
 void autonomous_thread(void *attr) {
 	osSemaphoreAcquire(autoSem, osWaitForever);
 	int steps[] = {
-		0x39, (RIGHT_KEBELAKANG_PUSING / 4), //turn right 1
+		0x39, (RIGHT_KEBELAKANG_PUSING / 4) + 100, //turn right 1
 		0x31, FORWARD_AUTO, //move forward 1
 		0x38, (LEFT_KEBELAKANG_PUSING / 2), //turn left 1
 		0x31, FORWARD_AUTO, //move forward 2
 		0x38, (LEFT_KEBELAKANG_PUSING / 2), //turn left 2
 		0x31, FORWARD_AUTO, //move forward 3
 		0x38, (LEFT_KEBELAKANG_PUSING / 2), //turn left 3
-		0x31, FORWARD_AUTO, //move forward 4
-		0x39, (RIGHT_KEBELAKANG_PUSING / 4) + 100, //turn right 2
+		0x31, FORWARD_AUTO * 1.3, //move forward 4
+		0x39, (RIGHT_KEBELAKANG_PUSING / 4) * 0.9, //turn right 2
 	};
 	//Autonomous mode
 	//We will use all sharp turns here
