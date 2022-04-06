@@ -101,7 +101,7 @@ void ultrasonic (void *argument) {
 		osSemaphoreAcquire(ultraSem,osWaitForever);
 		//distances: 5cm <-> 300 cm : 0.000147s <-> 0.00882s 
 		distance = counter * 0.034 / 2;
-		if(distance < 18)
+		if(distance < 15)
 			tooClose = 1;
 		else {
 			tooClose = 0;
@@ -143,15 +143,15 @@ void runCommand(int command, int duration) {
 void autonomous_thread(void *attr) {
 	osSemaphoreAcquire(autoSem, osWaitForever);
 	int steps[] = {
-		0x39, 340, //turn right 1
-	  0x31, 800, //move forward 1
-		0x38, 540, //turn left 1
-		0x31, 800, //move forward 2
-		0x38, 580, //turn left 2
-		0x31, 800, //move forward 3
-		0x38, 580, //turn left 3
-		0x31, 800, //move forward 4
-		0x39, 340, //turn right 2
+		0x39, (RIGHT_KEBELAKANG_PUSING / 4), //turn right 1
+		0x31, FORWARD_AUTO, //move forward 1
+		0x38, (LEFT_KEBELAKANG_PUSING / 2), //turn left 1
+		0x31, FORWARD_AUTO, //move forward 2
+		0x38, (LEFT_KEBELAKANG_PUSING / 2), //turn left 2
+		0x31, FORWARD_AUTO, //move forward 3
+		0x38, (LEFT_KEBELAKANG_PUSING / 2), //turn left 3
+		0x31, FORWARD_AUTO, //move forward 4
+		0x39, (RIGHT_KEBELAKANG_PUSING / 4) + 100, //turn right 2
 	};
 	//Autonomous mode
 	//We will use all sharp turns here
@@ -269,3 +269,16 @@ int main (void) {
   osKernelStart();       
   for (;;) {}
 }
+
+/*
+
+0x31, 800, //move forward 1
+		0x38, 540, //turn left 1
+		0x31, 800, //move forward 2
+		0x38, 580, //turn left 2
+		0x31, 800, //move forward 3
+		0x38, 580, //turn left 3
+		0x31, 800, //move forward 4
+		0x39, 340, //turn right 2
+
+*/

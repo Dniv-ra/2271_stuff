@@ -33,4 +33,10 @@
 #define LED_GREEN_7 16 //PTA16
 #define LED_GREEN_8 17 //PTA17
 
+//autonomous
+#define RIGHT_KEBELAKANG_PUSING 810
+#define LEFT_KEBELAKANG_PUSING 910
+#define FORWARD_AUTO 900
+
+
 
