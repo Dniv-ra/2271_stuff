@@ -123,7 +123,7 @@ void initPWM(void) {
 
 int cnv1 = 0;
 int cnv2 = 0;
-float trimming = 0.55;
+float trimming = 0.85;
 void setDirection(uint8_t data, float power) {
 	switch(data) {
 			case 0x31: //forward
@@ -170,16 +170,16 @@ void setDirection(uint8_t data, float power) {
 				break;
 			
 			case 0x38: //left strict
-				TPM1_C0V = calc_cnv(TPM1_MOD, 0.75); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
+				TPM1_C0V = calc_cnv(TPM1_MOD, 0.85); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
 				TPM1_C1V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
 				TPM0_C0V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
-				TPM0_C1V = calc_cnv(TPM0_MOD, 0.75); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
+				TPM0_C1V = calc_cnv(TPM0_MOD, 0.85); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			
 			case 0x39: //right strict
 				TPM1_C0V = calc_cnv(TPM1_MOD, 0); //MOTOR_FRONT_RIGHT_FWD and MOTOR_BACK_RIGHT_FWD
-				TPM1_C1V = calc_cnv(TPM1_MOD, 0.75); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
-				TPM0_C0V = calc_cnv(TPM0_MOD, 0.75); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
+				TPM1_C1V = calc_cnv(TPM1_MOD, 0.85); //MOTOR_FRONT_RIGHT_BK and MOTOR_BACK_RIGHT_BK
+				TPM0_C0V = calc_cnv(TPM0_MOD, 0.85); //MOTOR_FRONT_LEFT_FWD and MOTOR_BACK_LEFT_FWD
 				TPM0_C1V = calc_cnv(TPM0_MOD, 0); //MOTOR_FRONT_LEFT_BK and MOTOR_BACK_LEFT_BK
 				break;
 			

@@ -101,7 +101,7 @@ void ultrasonic (void *argument) {
 		osSemaphoreAcquire(ultraSem,osWaitForever);
 		//distances: 5cm <-> 300 cm : 0.000147s <-> 0.00882s 
 		distance = counter * 0.034 / 2;
-		if(distance < 15)
+		if(distance < 17)
 			tooClose = 1;
 		else {
 			tooClose = 0;
@@ -143,15 +143,15 @@ void runCommand(int command, int duration) {
 void autonomous_thread(void *attr) {
 	osSemaphoreAcquire(autoSem, osWaitForever);
 	int steps[] = {
-		0x39, (RIGHT_KEBELAKANG_PUSING / 4) + 100, //turn right 1
-		0x31, FORWARD_AUTO, //move forward 1
+		0x39, (RIGHT_KEBELAKANG_PUSING / 4), //turn right 1
+		0x31, FORWARD_AUTO * 1.5, //move forward 1
 		0x38, (LEFT_KEBELAKANG_PUSING / 2), //turn left 1
-		0x31, FORWARD_AUTO, //move forward 2
+		0x31, FORWARD_AUTO * 1.5, //move forward 2
 		0x38, (LEFT_KEBELAKANG_PUSING / 2), //turn left 2
-		0x31, FORWARD_AUTO, //move forward 3
-		0x38, (LEFT_KEBELAKANG_PUSING / 2), //turn left 3
-		0x31, FORWARD_AUTO * 1.3, //move forward 4
-		0x39, (RIGHT_KEBELAKANG_PUSING / 4) * 0.9, //turn right 2
+		0x31, FORWARD_AUTO * 1.5, //move forward 3
+		0x38, (LEFT_KEBELAKANG_PUSING / 2) * 0.9, //turn left 3
+		0x31, FORWARD_AUTO * 1.5, //move forward 4
+		0x39, (RIGHT_KEBELAKANG_PUSING / 4) * 1.4, //turn right 2
 	};
 	//Autonomous mode
 	//We will use all sharp turns here
@@ -160,7 +160,7 @@ void autonomous_thread(void *attr) {
 	
 	/* 1. Move forward 0 */
 	while(!tooClose) { 
-		setDirection(0x31, 0.5); //0x31 is forward
+		setDirection(0x31, 0.65); //0x31 is forward
 	}	
 	//Stop at object
 	time = 0;
@@ -178,7 +178,7 @@ void autonomous_thread(void *attr) {
 	/* 11. Move Forward 5*/
 	tooClose = 0;
 	while(!tooClose) { 
-		setDirection(0x31, 0.5); //0x31 is forward
+		setDirection(0x31, 0.75); //0x31 is forward
 	}	
 	//Stop at object
 	time = 0;
