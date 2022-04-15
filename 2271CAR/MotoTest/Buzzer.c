@@ -133,6 +133,7 @@ int melody[] = {
   // Super Mario Bros theme
   // Score available at https://musescore.com/user/2123/scores/2145
   // Theme by Koji Kondo
+  // Inspired by robsoncouto/arduino-songs
   
   
   NOTE_E5,8, NOTE_E5,8, REST,8, NOTE_E5,8, REST,8, NOTE_C5,8, NOTE_E5,8, //1
@@ -241,16 +242,11 @@ int playNote(int index) {
 			int divider = 0, noteDuration = 0;
 			divider = melody[index + 1];
 			if (divider > 0) {
-				// regular note, just proceed
 				noteDuration = (wholenote) / divider;
 			} else if (divider < 0) {
-				// dotted notes are represented with negative durations!!
 				noteDuration = (wholenote) / abs(divider);
-				noteDuration *= 1.5; // increases the duration in half for dotted notes
+				noteDuration *= 1.5; 
 			}
-
-			// we only play the note for 90% of the duration, leaving 10% as a pause
-			//tone(buzzer, melody[thisNote], noteDuration * 0.9);
 			if (melody[index] == REST) {
 				TPM2_C0V = calc_cnv(TPM0_MOD, 0);
 			} else {
@@ -265,16 +261,11 @@ int playEndNote(int index) {
 			int divider = 0, noteDuration = 0;
 			divider = endMelody[index + 1];
 			if (divider > 0) {
-				// regular note, just proceed
 				noteDuration = (wholenote) / divider;
 			} else if (divider < 0) {
-				// dotted notes are represented with negative durations!!
 				noteDuration = (wholenote) / abs(divider);
-				noteDuration *= 1.5; // increases the duration in half for dotted notes
+				noteDuration *= 1.5; 
 			}
-
-			// we only play the note for 90% of the duration, leaving 10% as a pause
-			//tone(buzzer, melody[thisNote], noteDuration * 0.9);
 			if (endMelody[index] == REST) {
 				TPM2_C0V = calc_cnv(TPM0_MOD, 0);
 			} else {
@@ -284,45 +275,5 @@ int playEndNote(int index) {
 			return noteDuration;
 }
 
-/*
-void audio (void *argument) {
-	
-	//int char_array[] = {'e','d','c','d','e','e','e','d','d','d','e','g','g'};
-	// sizeof gives the number of bytes, each int value is composed of two bytes (16 bits)
-	// there are two values per note (pitch and duration), so for each note there are four bytes
-	int notes = sizeof(melody) / sizeof(melody[0]) / 2;
-	int tempo =  200;
-	//this calculates the duration of a whole note in ms (Need check)
-	int wholenote = (60000 * 4) / TEMPO;
-
-	int divider = 0, noteDuration = 0;
-	//int i = 0;
-	while(1) {
-			for (int thisNote = 0; thisNote < notes * 2; thisNote = thisNote + 2) {
-			// calculates the duration of each note
-			divider = melody[thisNote + 1];
-			if (divider > 0) {
-				// regular note, just proceed
-				noteDuration = (wholenote) / divider;
-			} else if (divider < 0) {
-				// dotted notes are represented with negative durations!!
-				noteDuration = (wholenote) / abs(divider);
-				noteDuration *= 1.5; // increases the duration in half for dotted notes
-			}
-
-			// we only play the note for 90% of the duration, leaving 10% as a pause
-			//tone(buzzer, melody[thisNote], noteDuration * 0.9);
-			if (melody[thisNote] == REST) {
-				TPM0_C2V = calc_cnv(TPM0_MOD, 0);
-			} else {
-				TPM0_MOD = calc_mod(48000000, 128, melody[thisNote]);
-				TPM0_C2V = calc_cnv(TPM0_MOD, 0.5);
-			}
-			// Wait for the specief duration before playing the next note. (Rn same duration need scale)
-			delay(3000000/2); 
-		}
-	}
-}
-*/
 
 
